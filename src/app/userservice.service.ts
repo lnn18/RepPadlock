@@ -4,7 +4,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase/app';
 
-//import 'rxjs/add/operator/toPromise';
+//import 'rxjs/add/operator/toPromise';/
 
 @Injectable({
   providedIn: 'root'
