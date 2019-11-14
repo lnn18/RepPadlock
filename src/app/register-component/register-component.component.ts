@@ -16,7 +16,7 @@ export class RegisterComponentComponent{
 
   constructor(
     public authService: AuthServiceService,
-    private router: Router,
+    
     private fb: FormBuilder
   ) {
     this.createForm();
@@ -27,22 +27,6 @@ export class RegisterComponentComponent{
        email: ['', Validators.required ],
        password: ['',Validators.required]
      });
-   }
-
-   tryFacebookLogin(){
-     this.authService.doFacebookLogin()
-     .then(res =>{
-       this.router.navigate(['/user']);
-     }, err => console.log(err)
-     )
-   }
-
-   tryGoogleLogin(){
-     this.authService.doGoogleLogin()
-     .then(res =>{
-       this.router.navigate(['/user']);
-     }, err => console.log(err)
-     )
    }
 
    tryRegister(value){
@@ -57,6 +41,20 @@ export class RegisterComponentComponent{
        this.successMessage = "";
      })
    }
+
+    usuarios = [];
+    addCoffee = coffee => this.usuarios.push(coffee);
+
+   onSubmit() {
+    this.authService.form.value.IMEI = this.usuarios;
+    let data = this.authService.form.value;
+    
+   this.authService.createUser(data)
+       .then(res => {
+           /*do something here....
+           maybe clear the form or give a success message*/
+       });
+  }
   
 
 }

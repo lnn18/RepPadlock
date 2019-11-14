@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-
 import { UserserviceService } from '../userservice.service';
 import { AuthServiceService } from '../auth-service.service';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FirebaseUserModel } from '../usermodel.service';
+
 
 @Component({
   selector: 'page-user',
@@ -28,6 +28,7 @@ export class UserComponentComponent implements OnInit {
   }
 
   ngOnInit(): void {
+   
     this.route.data.subscribe(routeData => {
       let data = routeData['data'];
       if (data) {
@@ -36,6 +37,8 @@ export class UserComponentComponent implements OnInit {
       }
     })
   }
+
+  
 
   createForm(name) {
     this.profileForm = this.fb.group({
@@ -58,5 +61,4 @@ export class UserComponentComponent implements OnInit {
       console.log("Logout error", error);
     });
   }
-
 }

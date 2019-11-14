@@ -1,41 +1,70 @@
-<h1 class="header">Create an account with Firebase or Social Providers</h1>
+<div class= "box">
+    <img src='cadena.png'   >
+</div>
+<h1 class="header" align='center'>Registrar usuario</h1>
+
 <div class="container">
+  </div>
+  <a href="/user" class="home" ng-click="active='home'">Inicio</a>
+  <div class='box'>
   <div class="row">
     <div class="col-md-6 col-md-offset-3">
-      <form [formGroup]="registerForm">
-        <div class="form-group">
-          <label>Email address</label>
-          <input type="email" formControlName="email" class="form-control">
-        </div>
-        <div class="form-group">
+      <form [formGroup]="this.authService.form" (ngSubmit)="onSubmit()">
+        <label>Nombres</label>
+          <input placeholder="Nombres y apellidos" formControlName="nombre" 
+          type="text" 
+          class="input-field col s12">
+          <div class="bar">
+              <i></i>
+          </div>
+          <label>Tipo documento</label>
+          <input placeholder="Tipo de documento" formControlName="tipoDoc" 
+          type="text" 
+          class="input-field col s12">
+          <div class="bar">
+              <i></i>
+          </div>
+          <label>Número de identificación</label>
+          <input  placeholder="Número de identificación" formControlName="numDoc" 
+          type="text" 
+          class="input-field col s12">
+          <div class="bar">
+              <i></i>
+          </div>
+          <label>IMEI</label>
+          <input placeholder="IMEI" formControlName="IMEI" 
+          type="text" 
+          class="input-field col s12">
+          <div class="bar">
+          <i></i>
+          </div>
+          <label>email</label>
+          <input type="email" name= 'email' placeholder="email" required  formControlName="email" 
+          class="input-field col s12">
+          
+          <div class="bar">
+          <i></i>
+          </div>
+          <label>Telefono</label>
+          <input type="Telefono" name= 'Telefono' placeholder="Telefono" required
+          class="input-field col s12">
+          <div class="bar">
+          <i></i>
+          </div>
           <label>Password</label>
-          <input type="password" class="form-control" formControlName="password">
+          <input type="password" placeholder="password" class="form-control" formControlName="password"
+          class="input-field col s12">
           <label class="error">{{errorMessage}}</label>
           <label class="success">{{successMessage}}</label>
-        </div>
-        <button type="submit" (click)="tryRegister(registerForm.value)" class="btn btn-default">Register</button>
+          <div class="bar">
+              <i></i>
+              </div>  
+                
+        <button type="submit" (click)="tryRegister(registerForm.value)" >Registrar</button>
       </form>
     </div>
   </div>
   <div class="row">
-    <div class="col-md-4 col-md-offset-4">
-      <button type="button" class="btn btn-primary btn-block" (click)="tryFacebookLogin()">Register with Facebook</button>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-4 col-md-offset-4">
-      <button type="button" class="btn btn-danger btn-block" (click)="tryGoogleLogin()">Register with Google</button>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-4 col-md-offset-4">
-      <button type="button" class="btn btn-info btn-block" (click)="tryTwitterLogin()">Register with Twitter</button>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-4 col-md-offset-4">
-      <p>Already have an account? <a href="/login">Login</a></p>
-    </div>
   </div>
 </div>
  

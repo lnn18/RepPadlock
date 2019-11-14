@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { UsermodelService } from './usermodel.service';
+import {FirebaseUserModel} from './usermodel.service';
 
-describe('UsermodelService', () => {
+describe('FirebaseUserModel', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: UsermodelService = TestBed.get(UsermodelService);
+    const service: FirebaseUserModel = TestBed.get(FirebaseUserModel);
     expect(service).toBeTruthy();
   });
 });

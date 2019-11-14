@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 //Librerias Firebase
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { FormControl, FormGroup } from "@angular/forms";
 import * as firebase from 'firebase/app';
 
 //import 'rxjs/add/operator/toPromise';/mama
@@ -14,10 +15,12 @@ export class UserserviceService {
 
   constructor(
     //variable Base de datos FireBase
-    public db: AngularFirestore,
+    private db: AngularFirestore,
     //variable Autenticaion
     public afAuth: AngularFireAuth
   ) { }
+
+ 
 
   //Metodo que retorna la informacion el usuario autenticado
   getCurrentUser() {
@@ -46,4 +49,5 @@ export class UserserviceService {
       }, err => reject(err))
     })
   }
+  
 }

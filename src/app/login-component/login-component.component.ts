@@ -26,22 +26,14 @@ export class LoginComponentComponent  {
       email: ['', Validators.required ],
       password: ['',Validators.required]
     });
-  }
+  }   
 
-  tryFacebookLogin(){
-    this.authService.doFacebookLogin()
-    .then(res => {
-      this.router.navigate(['/user']);
-    })
-  }
-  
-
-  tryGoogleLogin(){
+ /*  tryGoogleLogin(){
     this.authService.doGoogleLogin()
     .then(res => {
       this.router.navigate(['/user']);
     })
-  }
+  } */
 
   tryLogin(value){
     this.authService.doLogin(value)
@@ -51,6 +43,9 @@ export class LoginComponentComponent  {
       console.log(err);
       this.errorMessage = err.message;
     })
+  }
+  goToResetPassword(){
+    this.authService.resetPassword('ResetPasswordPage');
   }
 
 }

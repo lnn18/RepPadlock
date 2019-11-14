@@ -1,0 +1,27 @@
+
+table, th, td {
+    border: 1px solid black;
+    align-items: center;
+  }
+  th {
+    text-align: center;
+  }
+  
+  img{
+    height: auto;
+    background-image: url("cadena.png");
+  }
+  
+#logo {
+	text-align: left;
+	
+}
+#logotipo {background-color: brown}
+
+p{
+  margin-left: 80px;
+}
+a{
+  margin-right: 10px;
+}
+

@@ -16,13 +16,25 @@ import { UserserviceService } from './userservice.service';
 import { AuthguardService } from './authguard.service';
 import { rootRouterConfig } from './app.routes';
 import { UserResolver } from './user-component/user.resolver';
+import { TablaCandadosComponent } from './tabla-candados/tabla-candados.component';
+import {CandadoServiceService } from './candado-service.service'
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { DataTablesModule } from 'angular-datatables';
+import { FormsModule } from '@angular/forms';
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
+
+
+
+
+
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponentComponent,
     RegisterComponentComponent,
-    UserComponentComponent
+    UserComponentComponent,
+    TablaCandadosComponent  
   ],
   imports: [
     BrowserModule,
@@ -31,9 +43,15 @@ import { UserResolver } from './user-component/user.resolver';
     AngularFirestoreModule,
     AngularFireAuthModule,
     ReactiveFormsModule,
-    RouterModule.forRoot(rootRouterConfig, { useHash: false })
+    NgbModule,
+   RouterModule.forRoot(rootRouterConfig, { useHash: false }),
+   DataTablesModule,
+   FormsModule,
+   MDBBootstrapModule.forRoot()
+
+  
   ],
-  providers: [AuthServiceService, UserserviceService, UserResolver, AuthguardService],
+  providers: [AuthServiceService, UserserviceService, UserResolver, AuthguardService,CandadoServiceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

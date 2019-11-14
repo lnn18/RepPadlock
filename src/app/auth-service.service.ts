@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFirestore } from "@angular/fire/firestore";
+import {Observable} from 'rxjs';
 import * as firebase from 'firebase/app';
+import {FormControl, FormGroup} from "@angular/forms";
 //import 'rxjs/add/operator/toPromise';
 
 
@@ -9,10 +12,25 @@ import * as firebase from 'firebase/app';
 })
 //
 export class AuthServiceService {
+  private user: Observable<firebase.User | null >;
 
   constructor(
-    public afAuth: AngularFireAuth
-  ) { }
+    public afAuth: AngularFireAuth,
+    private firestore: AngularFirestore
+  ) {
+    this.user=this.afAuth.authState;
+   }
+
+   form = new FormGroup ({         
+    nombre: new FormControl (''), 
+    IMEI: new FormControl (''), 
+    tipodoc: new FormControl (''), 
+    numDoc: new FormControl (''),
+    email: new FormControl (''),
+    telefono: new FormControl (''),
+    password: new FormControl ('')
+}) 
+  
 
   //Metodo login facebook
   doFacebookLogin() {
@@ -29,22 +47,6 @@ export class AuthServiceService {
     })
   }
 
-  //Metodo login Google
-  doGoogleLogin() {
-    return new Promise<any>((resolve, reject) => {
-      let provider = new firebase.auth.GoogleAuthProvider();
-      provider.addScope('profile');
-      provider.addScope('email');
-      this.afAuth.auth
-        .signInWithPopup(provider)
-        .then(res => {
-          resolve(res);
-        }, err => {
-          console.log(err);
-          reject(err);
-        })
-    })
-  }
 
   //metodo registro usuario y cotraseña
   doRegister(value) {
@@ -79,5 +81,36 @@ export class AuthServiceService {
     });
   }
 
+  // Obtener el estado de autenticación
+  get authenticated():boolean {
+    return this.user != null; // True ó False
+  }
+// Obtener el observador del usuario actual
+  get currentUser(): Observable<firebase.User | null> {
+    return this.user;
+  }
+   // Recuperar contraseña
+  resetPassword(email): Promise<void> {
+    return this.afAuth.auth.sendPasswordResetEmail(email).then(function() {
+      // Email sent.
+    }).catch(function(error) {
+      // An error happened.
+    });
+  }
+  // Verificar correo
+  verifyEmail(): Promise<void> {
+    return this.afAuth.auth.currentUser.sendEmailVerification();
+  }
+  // Finalizar sesión
+  signOut(): Promise<void> {
+    return this.afAuth.auth.signOut();
+  }
 
+  createUser(data) {
+    return new Promise<any>((resolve, reject) =>{
+        this.firestore.collection("usuario")
+            .add(data)
+            .then(res => {}, err => reject(err));
+    });
+}
 }
