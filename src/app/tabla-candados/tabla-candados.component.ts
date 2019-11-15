@@ -21,6 +21,7 @@ export class TablaCandadosComponent implements OnInit, AfterViewInit { // se agr
   previous: any = [];
   searchText: string = '';
   previous2: string;
+  searchDate:Date;
 
   constructor(
     private candado: CandadoServiceService,
@@ -69,7 +70,7 @@ export class TablaCandadosComponent implements OnInit, AfterViewInit { // se agr
       const prev = this.mdbTable.getDataSource();
   
       if (!this.searchText) {
-        this.mdbTable.setDataSource(this.previous2);
+        this.mdbTable.setDataSource(prev);
         this.Candados = this.mdbTable.getDataSource();
       }
   
@@ -77,6 +78,12 @@ export class TablaCandadosComponent implements OnInit, AfterViewInit { // se agr
         this.Candados = this.mdbTable.searchLocalDataBy(this.searchText);
         this.mdbTable.setDataSource(prev);
       }
+    }
+
+    busquedaFecha(){
+      const prev = this.mdbTable.getDataSource();
+      this.Candados = this.mdbTable.searchLocalDataBy(this.searchDate);
+      this.mdbTable.setDataSource(prev);
     }
 
 }
