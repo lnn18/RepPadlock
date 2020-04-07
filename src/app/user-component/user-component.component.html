@@ -1,22 +1,28 @@
 
 <div align='left'>
     <div>
-        <img src='cadena.png'>
+        <img src='../../assets/cadena.png'>
       </div> 
   </div>
 
   <div id="name"></div>
   <div id="main">
     <link rel="pantalla-inicio" href="user-component.component.css">
-    <nav class="{{active}}"  ng-click="$event.preventDefault()">
-      <a href="/candados" class="{{active}}" ng-click="active='candado'">Candados</a>
-      <a href="/register1" class="{{active}}"ng-click="active='register'">Registro de usuarios</a>
-      <a href="#" class="contact" ng-click="active='contact'">Contacto</a>
-      <a href ="/login"(click)="logout()" class="button">Salir</a>
-
-   </nav>
+    
+    <div class="nav"  ng-click="$event.preventDefault()" >
+      <div class="nav-links">
+      <a href="/candados"  ng-click="active='candado'"> Historial De Candados </a>
+      <a href="/register1" ng-click="active='register'"> Registro De Usuarios </a>
+      <a href="/candados1"  ng-click="active='candadoi'">Información De Candados</a>
+      <a href="#" class="contact" ng-click="active='contact'"> Contacto </a>
+      <a href ="/login"(click)="logout()" > Salir </a>
+    </div>
   </div>
   
+  </div>
+  
+  <!-- <ng-click="active='register'">Registro de usuarios  -->
+  <!-- <a href="/candadosinfo"  ng-click="active='candado'" style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 12.4px;">Información De Candados</a>-->
      
 
  

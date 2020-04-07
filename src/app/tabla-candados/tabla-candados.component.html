@@ -1,23 +1,25 @@
 
+
 <div class= "box">
-    <img src='cadena.png'   >
+    <img src='../../assets/cadena.png'>
 </div>
-<a href="/user" class="home" ng-click="active='home'">Inicio</a>
+<br>
+<br>
+<a href="/user" class="btn btn-outline-danger btn-block; home" ng-click="active='home'" style="margin-left: 100px;margin-top: -15px; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 16px;"><b>Inicio</b></a>
 <div class='box'>
-  <h1 align = 'center'>Tabla candados</h1>
+  <h1 style="text-align: center; color: dimgray; font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif"><b>Tabla Historial De Candados</b></h1>
 </div>
 <div class="container">
     <div class="row">
         <div class="col-md-12 mx-auto">
           <div class="md-form">
                        
-            <p>Fecha <br>
-              <input type="date" [(ngModel)]="searchDate"  (ngModelChange)="busquedaFecha($event)">
+            <p style="color: dimgray; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 18px;"><b>Fecha :</b><br>
+              <input type="date" [(ngModel)]="searchDate"  (change)="busquedaFecha($event)" style="border-radius: 5px; color: dimgray">
             </p>
-              
             <p>
-            <label for="search">Buscar</label><br>
-            <input type="text" [(ngModel)]="searchText" id="search" mdbInput (ngModelChange)="searchItems($event)">
+            <label for="search" style="color: dimgray; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 18px;"><b>Filtrar Por :</b></label><br>
+            <input type="text" [(ngModel)]="searchText" id="search" mdbInput (ngModelChange)="searchItems($event)" style="border-radius: 5px; color: dimgray; margin-top: -10px;">
             </p> 
           </div>
         </div>
@@ -25,20 +27,22 @@
     <table mdbTable #tableEl="mdbTable" class="table">
       <thead>
       <tr>
-        <th>Fecha</th>
-        <th>Ciudad</th>
-        <th>Estado</th>
-        <th>Estación</th>
-        <th>Identificador</th>
-        <th>Modo Apertura</th>
-        <th>Batería</th>
-        <th>Usuario</th>    
+          
+        <th style="font-size: 16px; color: floralwhite; font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;"><b>Fecha</b></th>
+        <th style="font-size: 16px; color: floralwhite; font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;"><b>Ciudad</b></th>
+        <th style="font-size: 16px; color: floralwhite; font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;"><b>Estado</b></th>
+        <th style="font-size: 16px; color: floralwhite; font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;"><b>Estación</b></th>
+        <th style="font-size: 16px; color: floralwhite; font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;"><b>Identificador</b></th>
+        <th style="font-size: 16px; color: floralwhite; font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;"><b>Modo Apertura</b></th>
+        <th style="font-size: 16px; color: floralwhite; font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;"><b>Batería</b></th>
+        <th style="font-size: 16px; color: floralwhite; font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;"><b>Usuario</b></th> 
       </tr>
       </thead>
       <tbody>
       <tr *ngFor="let order of Candados; let i = index">
        <!--  <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"
             scope="row">{{order.ciudad}}</th> -->
+            
             <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"><span>{{ order.fechaHora  | date:'dd-MM-yyyy HH:mm:ss'}}</span><br></td>
             <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{order.ciudad}}</td>
             <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{ order.estado }}</td>

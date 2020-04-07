@@ -24,11 +24,13 @@ export class AuthServiceService {
    form = new FormGroup ({         
     nombre: new FormControl (''), 
     IMEI: new FormControl (''), 
-    tipodoc: new FormControl (''), 
-    numDoc: new FormControl (''),
-    email: new FormControl (''),
-    telefono: new FormControl (''),
-    password: new FormControl ('')
+    tipoId: new FormControl (''), 
+    id: new FormControl (''),    
+    telefono: new FormControl (''),   
+    perfil: new FormControl(''),
+    idCiudad: new FormControl(''),
+    entidad: new FormControl('')
+
 }) 
   
 
@@ -49,9 +51,9 @@ export class AuthServiceService {
 
 
   //metodo registro usuario y cotraseña
-  doRegister(value) {
+  doRegister(email, password) {
     return new Promise<any>((resolve, reject) => {
-      firebase.auth().createUserWithEmailAndPassword(value.email, value.password)
+      firebase.auth().createUserWithEmailAndPassword(email,password)
         .then(res => {
           resolve(res);
         }, err => reject(err))
@@ -105,7 +107,7 @@ export class AuthServiceService {
   signOut(): Promise<void> {
     return this.afAuth.auth.signOut();
   }
-
+  //Método para crear usuarios en firebase 
   createUser(data) {
     return new Promise<any>((resolve, reject) =>{
         this.firestore.collection("usuario")

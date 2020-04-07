@@ -2,6 +2,7 @@ import { Component,  } from '@angular/core';
 import {AuthServiceService} from '../auth-service.service'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import * as firebase from 'firebase/app';
 
 @Component({
   selector: 'app-register-component',
@@ -16,7 +17,7 @@ export class RegisterComponentComponent{
 
   constructor(
     public authService: AuthServiceService,
-    
+    private router: Router,
     private fb: FormBuilder
   ) {
     this.createForm();
@@ -29,32 +30,28 @@ export class RegisterComponentComponent{
      });
    }
 
-   tryRegister(value){
-     this.authService.doRegister(value)
-     .then(res => {
-       console.log(res);
-       this.errorMessage = "";
-       this.successMessage = "Your account has been created";
-     }, err => {
-       console.log(err);
-       this.errorMessage = err.message;
-       this.successMessage = "";
-     })
-   }
-
-    usuarios = [];
-    addCoffee = coffee => this.usuarios.push(coffee);
-
    onSubmit() {
-    this.authService.form.value.IMEI = this.usuarios;
+   
     let data = this.authService.form.value;
-    
-   this.authService.createUser(data)
+    let email =this.registerForm.value.email;
+    let password =this.registerForm.value.password;
+   
+      this.authService.createUser(data)
        .then(res => {
            /*do something here....
            maybe clear the form or give a success message*/
        });
-  }
+       this.authService.doRegister(email, password)
+     .then(res => {
+       console.log(res);
+       this.errorMessage = "";
+       this.successMessage = "Su cuenta ha sido creada";      
+     }, err => {
+       console.log(err);
+       this.errorMessage = err.message;
+       this.successMessage = "";
+     })    
+      }
   
 
 }

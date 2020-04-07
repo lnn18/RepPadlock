@@ -7,6 +7,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FirebaseUserModel } from '../usermodel.service';
 
 
+
+
 @Component({
   selector: 'page-user',
   templateUrl: './user-component.component.html',
@@ -35,7 +37,7 @@ export class UserComponentComponent implements OnInit {
         this.user = data;
         this.createForm(this.user.name);
       }
-    })
+    });
   }
 
   

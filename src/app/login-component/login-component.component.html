@@ -1,13 +1,20 @@
 
-<div class= "w3-third" >
-    <img src='cadena.png' alt='Cadena, juntos lo hacemos posible' >
-    <h1 align ="center">Ingreso al sistema</h1>
+<div class= "box">
+    <img src='../../assets/cadena.png' >
+    <br>
+    <br>
 </div>
-
-<div class= "wrap" align ='center'>
-    
+  <br>
+  <br>
+  <br>
+<div class="container" style="margin-top: 0px; margin-bottom: 0px;">
+  <div class= "box" style="text-align: center; margin-top: -0px; margin-bottom: 0px;">
+    <h1 class="header"  style="text-align: center; color: dimgray; margin-bottom: 10px; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif"><b>Ingreso Al Sistema</b></h1>
+  </div>
+  <br>
+  <br>
+<div class= "wrap" style="align-items: center; margin-top: -0px; ; margin-left: 400px">
     <form [formGroup]="loginForm">
-      
       <div class="bar" >
       <input type="email" formControlName="email" class="form-control" placeholder="email" required>
       </div>
@@ -20,12 +27,11 @@
       <div>
         <hr />
       </div>
-
       <div>
-          <button  type="submit" (click)="tryLogin(loginForm.value)" class="btn btn-default" href="/inicio">Ingresa</button>
+          <button  type="submit" (click)="tryLogin(loginForm.value)" class="btn btn-default" href="/inicio">Ingresar</button>
       </div>
-      
     </form>
+</div>
 </div>
 
 

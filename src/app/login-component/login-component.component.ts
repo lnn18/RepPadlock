@@ -41,7 +41,7 @@ export class LoginComponentComponent  {
       this.router.navigate(['/user']);
     }, err => {
       console.log(err);
-      this.errorMessage = err.message;
+      this.errorMessage = "Usuario/Contraseña no coinciden, intente de nuevo.";
     })
   }
   goToResetPassword(){

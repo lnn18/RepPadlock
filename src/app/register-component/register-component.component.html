@@ -1,70 +1,87 @@
 <div class= "box">
-    <img src='cadena.png'   >
+  <img src='../../assets/cadena.png'   >
+  <br>
+  <br>
+  <br>
+  <a  href="/user" class="btn btn-outline-danger btn-block; home" ng-click="active='home'" style="margin-left: 100px; margin-top: -15px; "><b style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 16px">Inicio</b></a>
 </div>
-<h1 class="header" align='center'>Registrar usuario</h1>
-
-<div class="container">
+<br>
+<div>
+  <a href="listaUsuario" ng-click="active='listaUsuario'" class="btn btn-outline-danger" style="margin-left: 60px; margin-top: -20px; "><b style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 16px">Lista De Usuarios</b></a>
+</div>
+<div class="container" style="margin-top: 0px; margin-bottom: 0px;">
+  <div class= "box" style="text-align: center; margin-top: -40px; margin-bottom: 0px;">
+    <h1 class="header"  style="text-align: center; color: dimgray; margin-bottom: 10px; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif"><b>Registrar Usuario</b></h1>
   </div>
-  <a href="/user" class="home" ng-click="active='home'">Inicio</a>
-  <div class='box'>
-  <div class="row">
-    <div class="col-md-6 col-md-offset-3">
-      <form [formGroup]="this.authService.form" (ngSubmit)="onSubmit()">
-        <label>Nombres</label>
-          <input placeholder="Nombres y apellidos" formControlName="nombre" 
-          type="text" 
-          class="input-field col s12">
-          <div class="bar">
-              <i></i>
-          </div>
-          <label>Tipo documento</label>
-          <input placeholder="Tipo de documento" formControlName="tipoDoc" 
-          type="text" 
-          class="input-field col s12">
-          <div class="bar">
-              <i></i>
-          </div>
-          <label>Número de identificación</label>
-          <input  placeholder="Número de identificación" formControlName="numDoc" 
-          type="text" 
-          class="input-field col s12">
-          <div class="bar">
-              <i></i>
-          </div>
-          <label>IMEI</label>
-          <input placeholder="IMEI" formControlName="IMEI" 
-          type="text" 
-          class="input-field col s12">
-          <div class="bar">
-          <i></i>
-          </div>
-          <label>email</label>
-          <input type="email" name= 'email' placeholder="email" required  formControlName="email" 
-          class="input-field col s12">
-          
-          <div class="bar">
-          <i></i>
-          </div>
-          <label>Telefono</label>
-          <input type="Telefono" name= 'Telefono' placeholder="Telefono" required
-          class="input-field col s12">
-          <div class="bar">
-          <i></i>
-          </div>
-          <label>Password</label>
-          <input type="password" placeholder="password" class="form-control" formControlName="password"
-          class="input-field col s12">
-          <label class="error">{{errorMessage}}</label>
-          <label class="success">{{successMessage}}</label>
-          <div class="bar">
-              <i></i>
-              </div>  
-                
-        <button type="submit" (click)="tryRegister(registerForm.value)" >Registrar</button>
-      </form>
+  <br>
+<div class= "wrap" style="align-items: center; margin-left: 400px; margin-top: -0px;">
+  <form [formGroup]="this.authService.form" (ngSubmit)="onSubmit()">
+    <br>
+    <label style="margin-left: 25px; color: dimgray;"><b style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 18px;">   Nombres Y Apellidos : </b></label>
+    <input placeholder="Nombres Y Apellidos" formControlName="nombre" 
+      type="text" 
+      class="input-field col s12" style="border-radius: 5px; color: #e20613;">
+    <div class="bar">
+      <i></i>
     </div>
-  </div>
-  <div class="row">
-  </div>
+    <br>
+    <label style="margin-left: 25px; color: dimgray;"><b style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 18px;">   Tipo De Documento : </b></label>
+    <input placeholder="Tipo De Documento" formControlName="tipoId" 
+      type="text" 
+      class="input-field col s12" style="border-radius: 5px; color: #e20613;">
+      <div class="bar">
+        <i></i>
+      </div>
+    <br>
+    <label style="margin-left: 25px; color: dimgray;"><b style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 18px;">   Número De Identificación : </b></label>
+    <input  placeholder="Número De Identificación" formControlName="id" 
+      type="text" 
+      class="input-field col s12" style="border-radius: 5px; color: #e20613;">
+      <div class="bar">
+        <i></i>
+      </div>
+    <br>
+    <label style="margin-left: 25px; color: dimgray;"><b style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 18px;">   IMEI : </b></label>
+    <input placeholder="IMEI" formControlName="IMEI" 
+      type="text" 
+      class="input-field col s12" style="border-radius: 5px; color: #e20613;">
+      <div class="bar">
+        <i></i>
+      </div>
+    <br>
+    <label style="margin-left: 25px; color: dimgray;"><b style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 18px;">   Entidad : </b></label>
+      <input placeholder="Entidad" formControlName="entidad" 
+      type="text" 
+      class="input-field col s12" style="border-radius: 5px; color: #e20613;">
+      <div class="bar">
+        <i></i>
+      </div>
+    <br>
+    <label style="margin-left: 25px; color: dimgray;"><b style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 18px;">   Teléfono : </b></label>
+    <input type="Telefono" name= 'Telefono' placeholder="Teléfono" 
+    class="input-field col s12" style="border-radius: 5px; color: #e20613;">
+      <div class="bar">
+        <i></i>
+      </div>
+      <br>
+  </form>
+  <form [formGroup]="registerForm">
+    <label style="margin-left: 25px; color: dimgray;"><b style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 18px;">   Correo Electrónico : </b></label>
+    <input type="email" formControlName="email"  class="input-field col s12" placeholder="Correo" style="border-radius: 5px; color: #e20613;">
+    <div class="bar">
+      <i></i>
+    </div>    
+    <br>
+    <label style="margin-left: 25px; color: dimgray;"><b style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 18px;">   Contraseña : </b></label>
+    <input type="password"  class="input-field col s12" formControlName="password" placeholder="Contraseña" style="border-radius: 5px; color: #e20613;">
+    <label class="error">{{errorMessage}}</label>
+    <label class="success">{{successMessage}}</label>
+    <div class="bar">
+      <i></i>
+    </div>  
+    <div class= "wrap" >
+      <button  (click)="onSubmit()" class="btn btn-default btn-block" ><b>Registro</b></button>
+    </div>
+  </form>
 </div>
- 
+</div>

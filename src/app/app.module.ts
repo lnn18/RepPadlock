@@ -17,13 +17,15 @@ import { AuthguardService } from './authguard.service';
 import { rootRouterConfig } from './app.routes';
 import { UserResolver } from './user-component/user.resolver';
 import { TablaCandadosComponent } from './tabla-candados/tabla-candados.component';
-import {CandadoServiceService } from './candado-service.service'
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { CandadoServiceService } from './candado-service.service'
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DataTablesModule } from 'angular-datatables';
 import { FormsModule } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
-
-
+import { ListaUsuariosComponent } from './lista-usuarios/lista-usuarios.component';
+import { TablaCandadosInfoComponent } from './tabla-candados-info/tabla-candados-info.component';
+import { AdminCandadoComponent } from './admin-candado/admin-candado.component';
 
 
 
@@ -34,7 +36,10 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
     LoginComponentComponent,
     RegisterComponentComponent,
     UserComponentComponent,
-    TablaCandadosComponent  
+    TablaCandadosComponent,
+    ListaUsuariosComponent,
+    TablaCandadosInfoComponent,
+    AdminCandadoComponent  
   ],
   imports: [
     BrowserModule,
@@ -44,10 +49,10 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
     AngularFireAuthModule,
     ReactiveFormsModule,
     NgbModule,
-   RouterModule.forRoot(rootRouterConfig, { useHash: false }),
-   DataTablesModule,
-   FormsModule,
-   MDBBootstrapModule.forRoot()
+    RouterModule.forRoot(rootRouterConfig, { useHash: false }),
+    DataTablesModule,
+    FormsModule,
+    MDBBootstrapModule.forRoot()
 
   
   ],

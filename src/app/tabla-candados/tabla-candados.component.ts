@@ -4,12 +4,14 @@ import { AngularFirestore, AngularFirestoreCollection } from "@angular/fire/fire
 import { MdbTablePaginationComponent, MdbTableDirective } from 'angular-bootstrap-md';
 
 
+
 @Component({
   selector: 'app-tabla-candados',
   templateUrl: './tabla-candados.component.html',
   styleUrls: ['./tabla-candados.component.css'],
  
 })
+
 export class TablaCandadosComponent implements OnInit, AfterViewInit { // se agrego el AfterViewInit para desarrollar ejemplo de tabla
   @ViewChild(MdbTablePaginationComponent, { static: true }) mdbTablePagination: MdbTablePaginationComponent; //Se agregaron las lineas 14 y 15 para ejemplo de tabla
   @ViewChild(MdbTableDirective, { static: true }) mdbTable: MdbTableDirective;
@@ -66,7 +68,7 @@ export class TablaCandadosComponent implements OnInit, AfterViewInit { // se agr
     }, error => {
     });
     
-    searchItems() {
+    searchItems(algo) {
       const prev = this.mdbTable.getDataSource();
   
       if (!this.searchText) {
@@ -80,7 +82,7 @@ export class TablaCandadosComponent implements OnInit, AfterViewInit { // se agr
       }
     }
 
-    busquedaFecha(){
+    busquedaFecha(algo){
       const prev = this.mdbTable.getDataSource();
       this.Candados = this.mdbTable.searchLocalDataBy(this.searchDate);
       this.mdbTable.setDataSource(prev);
