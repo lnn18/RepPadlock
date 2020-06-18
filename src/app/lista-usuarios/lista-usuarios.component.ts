@@ -15,7 +15,7 @@ export class ListaUsuariosComponent implements OnInit, AfterViewInit {
   //fechaHora='';
   newDate: Date;
   newCity: string;
-  newCity1: string;
+  newCity1: any = [];
   //Data object for listing items
   Usuario: any[] = []; 
   //Save first document in snapshot of items received
@@ -23,7 +23,7 @@ export class ListaUsuariosComponent implements OnInit, AfterViewInit {
   searchText: string = '';
   previous2: string;
   searchDate:Date;
-  City: any[] = [];
+  City: any = [];
   Ucity: any = [];
 
   constructor(
@@ -35,13 +35,13 @@ export class ListaUsuariosComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.getInformacionUsuario(); 
     this.previous2 = this.mdbTable.getDataSource(); 
-    this.recorrer();  
+    //this.recorrer();  
     //this.getInformacionCiudad(); 
     //this.getOneCiudad1(); 
   }
 
   ngAfterViewInit(){
-    this.mdbTablePagination.setMaxVisibleItemsNumberTo(10);
+    this.mdbTablePagination.setMaxVisibleItemsNumberTo(20);
 
     this.mdbTablePagination.calculateFirstItemIndex();
     this.mdbTablePagination.calculateLastItemIndex();
@@ -56,13 +56,36 @@ export class ListaUsuariosComponent implements OnInit, AfterViewInit {
     .subscribe(response =>{
       this.Usuario= [];
         for (let order of response) {
+
           this.Usuario.push(order.payload.doc.data());
+
+          for(let i = 0; i < this.Usuario.length; i++){
+            this.Ucity[i] = this.Usuario[i].idCiudad;
+            this.newCity = this.Usuario[i].idCiudad;
+          }
+
+          this.getOneCiudad1  = () => this.candado .getOneCiudad(this.newCity).subscribe(resp => {
+            //this.City= [];
+            for(let ord1 of resp){
+              this.City.push(ord1.payload.doc.data());
+              for(let i = 0; i < this.Usuario.length; i++){
+                this.Usuario[i].idCiudad = this.City.nombreCiudad;
+              }
+            }
+        });
+
         }
 
         for(let i = 0; i < this.Usuario.length; i++){
           this.newDate=new Date(this.Usuario[i].fechaHora);
           this.Usuario[i].fechaHora = this.newDate;
-          this.Ucity[i] = this.Usuario[i].idCiudad;
+          //this.Ucity[i] = this.Usuario[i].idCiudad;
+          //this.newCity = this.Usuario[i].idCiudad;
+          /*this.getOneCiudad1  = () => this.candado .getOneCiudad(this.newCity).subscribe(resp => {
+              //this.City= [];
+                this.City.push(resp.payload.data())
+                this.Usuario[i].idCiudad = this.City.nombreCiudad;
+          });*/
           //this.recorrer();
         }
 
@@ -74,27 +97,18 @@ export class ListaUsuariosComponent implements OnInit, AfterViewInit {
         this.Usuario= this.mdbTable.getDataSource();
         this.previous = this.mdbTable.getDataSource();
 
-        this.recorrer();  
+        //this.recorrer(); 
+        //this.newCity = this.Ucity[0];
+        //this.getOneCiudad1();
            
     });
     
-    recorrer(){
-
-      for(let i = 0; i < this.Ucity.length; i++){
-        this.newCity = this.Ucity[i];
-        this.getInformacionCandado();
-      }
-      //console.log( this.newCity)
-    }
-    
-    getInformacionCandado = () => this.candado
-    .getOneCiudad()
+    getOneCiudad1  = () => this.candado
+    .getOneCiudad(this.newCity)
       .subscribe(resp => {
-        this.City= [];
-        
-            this.City = resp;
-            //this.newCity1 = this.City.nombreCiudad;
-       
+        //this.City= [];
+          //this.City.push(resp.payload.data())
+
     });
 
     searchItems(algo) {
@@ -121,3 +135,18 @@ export class ListaUsuariosComponent implements OnInit, AfterViewInit {
  //this.prube1 = this.mdbTable.getDataSource();          
  console.log(this.prube1)
  this.Usuario[i].idCiudad = this.getOneCiudad1();*/
+
+ //this.recorrer();
+ //this.City = resp;
+ //this.newCity1 = this.City.nombreCiudad;
+
+ /*recorrer(){
+
+      for(let i = 0; i < this.Ucity.length; i++){
+
+          this.newCity = this.Ucity[i];
+          this.getOneCiudad1();
+
+        }
+      //console.log( this.newCity)
+    }*/

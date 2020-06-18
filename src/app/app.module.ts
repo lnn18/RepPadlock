@@ -26,7 +26,8 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { ListaUsuariosComponent } from './lista-usuarios/lista-usuarios.component';
 import { TablaCandadosInfoComponent } from './tabla-candados-info/tabla-candados-info.component';
 import { AdminCandadoComponent } from './admin-candado/admin-candado.component';
-
+import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -41,6 +42,10 @@ import { AdminCandadoComponent } from './admin-candado/admin-candado.component';
     TablaCandadosInfoComponent,
     AdminCandadoComponent  
   ],
+  exports: [
+    AdminCandadoComponent,
+    TablaCandadosInfoComponent
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -52,9 +57,9 @@ import { AdminCandadoComponent } from './admin-candado/admin-candado.component';
     RouterModule.forRoot(rootRouterConfig, { useHash: false }),
     DataTablesModule,
     FormsModule,
-    MDBBootstrapModule.forRoot()
-
-  
+    MDBBootstrapModule.forRoot(),
+    CommonModule,
+    HttpClientModule
   ],
   providers: [AuthServiceService, UserserviceService, UserResolver, AuthguardService,CandadoServiceService],
   bootstrap: [AppComponent]

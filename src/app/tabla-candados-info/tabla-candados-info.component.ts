@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, HostListener, AfterViewInit, ChangeDetect
 import { CandadoServiceService } from '../candado-service.service';
 import { AngularFirestore, AngularFirestoreCollection } from "@angular/fire/firestore";
 import { MdbTablePaginationComponent, MdbTableDirective } from 'angular-bootstrap-md';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tabla-candados-info',
@@ -20,12 +21,15 @@ export class TablaCandadosInfoComponent implements OnInit, AfterViewInit {
   searchText: string = '';
   previous2: string;
   searchDate:Date;
+  nombreVec: any = [];
+  nombreCand: string= '';
 
 
   constructor(
-    private candadoi: CandadoServiceService,
+    public candadoi: CandadoServiceService,
     private firestore: AngularFirestore,
-    private cdRef: ChangeDetectorRef
+    private cdRef: ChangeDetectorRef,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -34,7 +38,7 @@ export class TablaCandadosInfoComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {//Se agrega función para realizar ejemplo de la tabla
-    this.mdbTablePagination.setMaxVisibleItemsNumberTo(10);
+    this.mdbTablePagination.setMaxVisibleItemsNumberTo(20);
 
     this.mdbTablePagination.calculateFirstItemIndex();
     this.mdbTablePagination.calculateLastItemIndex();
@@ -42,11 +46,12 @@ export class TablaCandadosInfoComponent implements OnInit, AfterViewInit {
   }
 
   getInformacionCandado = () => this.candadoi
-  .getInformacionCandado()
+  .getInfoCandado()
   .subscribe(response =>{ 
       this.Candados= [];
       for (let order of response) {
         this.Candados.push(order.payload.doc.data());
+        this.cambiarNombre();
       }
       
       this.mdbTable.setDataSource(this.Candados);//nuevo
@@ -71,4 +76,28 @@ export class TablaCandadosInfoComponent implements OnInit, AfterViewInit {
     }
   }
 
+  cambiarNombre(){
+    for(let i = 0; i < this.Candados.length; i++){
+      this.nombreVec[i] = this.Candados[i].nombreCandado;
+      this.nombreCand = this.nombreVec[i];
+      this.candadoi.enviarNombre(this.nombreCand);
+    }
+  }
+
+  verAdmin(nombre: string){
+    this.router.navigate(["/admin", nombre]);
+  }
+
 }
+
+
+/*
+for(let i = 0; i < this.Candados.length; i++){
+          this.nombreCand = this.Candados[i].nombreCandado;
+          this.cambiarNombre();
+          this.cambioTexto(this.nombreCand);
+        }
+        
+        cambioTexto(nombreCand: string){
+      this.candadoi.enviarNombre(nombreCand);
+  }*/

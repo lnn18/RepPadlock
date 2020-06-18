@@ -24,7 +24,7 @@
           </div>
         </div>
     </div>  
-    <table mdbTable #tableEl="mdbTable" class="table">
+    <table mdbTable #tableEl="mdbTable" class="table" id="excel-table">
       <thead>
       <tr>
           
@@ -62,4 +62,8 @@
       </tr>
       </tfoot>
     </table>
+
+    <button class="btn btn-outline-danger btn-block; home" style="margin-left: 900px;margin-top: 10px; margin-bottom: 15px ;font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 16px;" (click)="exportexcel()"><b>Exportar</b></button>
+
   </div>
+

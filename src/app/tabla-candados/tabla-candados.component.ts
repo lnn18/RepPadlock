@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, HostListener, AfterViewInit, ChangeDetect
 import { CandadoServiceService } from '../candado-service.service';
 import { AngularFirestore, AngularFirestoreCollection } from "@angular/fire/firestore";
 import { MdbTablePaginationComponent, MdbTableDirective } from 'angular-bootstrap-md';
-
+import * as XLSX from 'xlsx';
 
 
 @Component({
@@ -24,6 +24,9 @@ export class TablaCandadosComponent implements OnInit, AfterViewInit { // se agr
   searchText: string = '';
   previous2: string;
   searchDate:Date;
+  fileName= 'ExcelSheet.xlsx';
+
+  //fileName= 'ExcelSheet.xlsx'; 
 
   constructor(
     private candado: CandadoServiceService,
@@ -37,7 +40,7 @@ export class TablaCandadosComponent implements OnInit, AfterViewInit { // se agr
   }
 
   ngAfterViewInit() {//Se agrega función para realizar ejemplo de la tabla
-    this.mdbTablePagination.setMaxVisibleItemsNumberTo(10);
+    this.mdbTablePagination.setMaxVisibleItemsNumberTo(20);
 
     this.mdbTablePagination.calculateFirstItemIndex();
     this.mdbTablePagination.calculateLastItemIndex();
@@ -86,6 +89,22 @@ export class TablaCandadosComponent implements OnInit, AfterViewInit { // se agr
       const prev = this.mdbTable.getDataSource();
       this.Candados = this.mdbTable.searchLocalDataBy(this.searchDate);
       this.mdbTable.setDataSource(prev);
+    }
+    
+    exportexcel(): void 
+    {
+
+       /* table id is passed over here */   
+       let element = document.getElementById('excel-table'); 
+       const ws: XLSX.WorkSheet =XLSX.utils.table_to_sheet(element);
+
+       /* generate workbook and add the worksheet */
+       const wb: XLSX.WorkBook = XLSX.utils.book_new();
+       XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+       /* save to file */
+       XLSX.writeFile(wb, this.fileName);
+			
     }
 
 }

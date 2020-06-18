@@ -31,16 +31,17 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let order of Candados; let i = index">
+      <tr *ngFor="let order of Candados; let i = index" >
        <!--  <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"
             scope="row">{{order.ciudad}}</th> -->
-            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{ order.nombreCandado }}<br></td>
+            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" >{{ order.nombreCandado }}</td>
             <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{ order.permiso }}</td>
             <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{ order.idEstacion }}</td>
-            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"><a href="/admin" class="btn btn-outline-danger btn-block; home" ng-click="active='adminc'" style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 16px;"><b>Editar</b></a></td>
+            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"><a (click)="verAdmin(order.nombreCandado)" class="btn btn-outline-danger btn-block; home"  style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 16px;"><b style="color: firebrick;" >Editar</b></a></td>
             
       </tr>
       </tbody>
+      
       <tfoot class="grey lighten-5 w-100">
       <tr >
         <td colspan="8"  >
