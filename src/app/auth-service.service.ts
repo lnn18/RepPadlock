@@ -3,7 +3,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from "@angular/fire/firestore";
 import {Observable} from 'rxjs';
 import * as firebase from 'firebase/app';
-import {FormControl, FormGroup} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 //import 'rxjs/add/operator/toPromise';
 
 
@@ -21,17 +21,54 @@ export class AuthServiceService {
     this.user=this.afAuth.authState;
    }
 
-   form = new FormGroup ({         
-    nombre: new FormControl (''), 
-    IMEI: new FormControl (''), 
-    tipoId: new FormControl (''), 
-    id: new FormControl (''),    
-    telefono: new FormControl (''),   
-    perfil: new FormControl(''),
-    idCiudad: new FormControl(''),
-    entidad: new FormControl('')
+   form = new FormGroup ({    
+    IMEI: new FormControl ('', [
+      Validators.required,
+      Validators.minLength(15),
+      Validators.maxLength(15)
+    ]), 
+    entidad: new FormControl('', [
+      Validators.required,
+      Validators.minLength(3),
+      Validators.maxLength(10)
+    ]),
+    id: new FormControl ('', [
+      Validators.required,
+      Validators.minLength(3)
+    ]),
+    idCiudad: new FormControl('', [
+      Validators.required,
+      Validators.minLength(3)
+    ]),
+    mail: new FormControl('', [
+      Validators.required,
+      Validators.minLength(3)
+    ]),
+    nombre: new FormControl ('', [
+      Validators.required,
+      Validators.minLength(4)
+    ]), 
+    perfil: new FormControl('TuCmJa3tPzkHEocAW0S8', [
+      Validators.required,
+      Validators.minLength(3)
+    ]),
+    telefono: new FormControl ('', [
+      Validators.required,
+      Validators.minLength(10)
+    ]),
+    tipoId: new FormControl ('', [
+      Validators.required,
+      Validators.minLength(3)
+    ])    
 
 }) 
+
+  form1 = new FormGroup ({         
+    IMEI_1: new FormControl (''),
+    IMEI_2: new FormControl (''), 
+    IMEI_3: new FormControl ('')
+
+  }) 
   
 
   //Metodo login facebook
@@ -114,5 +151,11 @@ export class AuthServiceService {
             .add(data)
             .then(res => {}, err => reject(err));
     });
-}
+  }
+
+  //Método para crear usuarios en firebase
+  updateCandado(ID, data1) {
+      this.firestore.doc('candado/' + ID).update(data1);
+  }
+
 }

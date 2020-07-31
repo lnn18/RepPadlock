@@ -71,6 +71,10 @@ export class CandadoServiceService {
     return this.firestore.collection("candado", ref => ref .where('nombreCandado', "==", nombre)).snapshotChanges();
   }
 
+  public getId(nombre: string) {
+    return this.firestore.collection("estacion", ref => ref .where('nombreEstacion', "==", nombre)).snapshotChanges();
+  }
+
   public getOneEstacion(Id: string ) {
     return this.firestore.collection("estacion").doc(Id).snapshotChanges();
   }

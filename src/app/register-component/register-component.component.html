@@ -15,72 +15,134 @@
   </div>
   <br>
 <div class= "wrap" style="align-items: center; margin-left: 400px; margin-top: -0px;">
-  <form [formGroup]="this.authService.form" (ngSubmit)="onSubmit()">
+  <form [formGroup]="this.authService.form" (ngSubmit)="onSubmit(this.authService.form.valid)" novalidate="">
     <br>
     <label style="margin-left: 25px; color: dimgray;"><b style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 18px;">   Nombres Y Apellidos : </b></label>
-    <input placeholder="Nombres Y Apellidos" formControlName="nombre" 
-      type="text" 
-      class="input-field col s12" style="border-radius: 5px; color: #e20613;">
-    <div class="bar">
-      <i></i>
-    </div>
+    <input class="form-control" placeholder="Nombres Y Apellidos" formControlName="nombre" 
+      type="text" [ngClass]="{'is-invalid': !this.authService.form.get('nombre').valid}"
+      class="input-field col s12" style="border-radius: 5px; color:black;" required>
+
+      <div class="bar">
+        <i></i>
+      </div>
+    
+      <div *ngIf="this.authService.form.controls['nombre'].errors?.required" class="invalid-feedback">
+        El nombre es necesario
+      </div>
+      <div *ngIf="this.authService.form.controls['nombre'].errors?.minlength" class="invalid-feedback">
+        El nombre debe contener mínimo 4 caracteres
+      </div>
+
     <br>
+
     <label style="margin-left: 25px; color: dimgray;"><b style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 18px;">   Tipo De Documento : </b></label>
-    <input placeholder="Tipo De Documento" formControlName="tipoId" 
-      type="text" 
-      class="input-field col s12" style="border-radius: 5px; color: #e20613;">
-      <div class="bar">
-        <i></i>
-      </div>
+    
+      <select class="form-control" placeholder="Tipo De Documento" formControlName="tipoId" class="input-field col s10" style="border-radius: 5px; color:black;" required >
+        <option  value="Cédula" > Cédula </option>
+        <option  value="Cédula de Extranjería" > Cédula de Extranjería </option>
+      </select>
+
     <br>
+    <br>
+
     <label style="margin-left: 25px; color: dimgray;"><b style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 18px;">   Número De Identificación : </b></label>
-    <input  placeholder="Número De Identificación" formControlName="id" 
-      type="text" 
-      class="input-field col s12" style="border-radius: 5px; color: #e20613;">
+    <input  class="form-control" placeholder="Número De Identificación" formControlName="id" 
+      type="text" [ngClass]="{'is-invalid': !this.authService.form.get('id').valid}"
+      class="input-field col s12" style="border-radius: 5px; color:black;" required>
+
       <div class="bar">
         <i></i>
       </div>
+
+      <div *ngIf="this.authService.form.controls['id'].errors?.required" class="invalid-feedback">
+        El número de identificación es necesario
+      </div>
+      <div *ngIf="this.authService.form.controls['id'].errors?.minlength" class="invalid-feedback">
+        El número de identificación debe contener mínimo 6 digitos
+      </div>
+
     <br>
+
     <label style="margin-left: 25px; color: dimgray;"><b style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 18px;">   IMEI : </b></label>
-    <input placeholder="IMEI" formControlName="IMEI" 
-      type="text" 
-      class="input-field col s12" style="border-radius: 5px; color: #e20613;">
+    <input placeholder="IMEI" formControlName="IMEI" class="form-control"
+      type="text" [ngClass]="{'is-invalid': !this.authService.form.get('IMEI').valid}"
+      class="input-field col s12" style="border-radius: 5px; color:black;" required>
+
       <div class="bar">
         <i></i>
       </div>
+
+      <div *ngIf="this.authService.form.controls['IMEI'].errors?.required" class="invalid-feedback">
+        El IMEI es necesario
+      </div>
+      <div *ngIf="this.authService.form.controls['IMEI'].errors?.minlength" class="invalid-feedback">
+        El IMEI debe contener 15 caracteres
+      </div>
+
     <br>
+
     <label style="margin-left: 25px; color: dimgray;"><b style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 18px;">   Entidad : </b></label>
-      <input placeholder="Entidad" formControlName="entidad" 
-      type="text" 
-      class="input-field col s12" style="border-radius: 5px; color: #e20613;">
+      <input placeholder="Entidad" formControlName="entidad" class="form-control"
+      type="text" [ngClass]="{'is-invalid': !this.authService.form.get('entidad').valid}"
+      class="input-field col s12" style="border-radius: 5px; color:black;" required>
+
       <div class="bar">
         <i></i>
       </div>
+
+      <div *ngIf="this.authService.form.controls['entidad'].errors?.required" class="invalid-feedback">
+        La entidad es necesaria
+      </div>
+      <div *ngIf="this.authService.form.controls['entidad'].errors?.minlength" class="invalid-feedback">
+        La entidad debe contener mínimo 3 caracteres
+      </div>
+
     <br>
+
     <label style="margin-left: 25px; color: dimgray;"><b style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 18px;">   Teléfono : </b></label>
-    <input type="Telefono" name= 'Telefono' placeholder="Teléfono" 
-    class="input-field col s12" style="border-radius: 5px; color: #e20613;">
+    <input type="Telefono" name= 'Telefono' placeholder="Teléfono" formControlName="telefono"
+    class="form-control" [ngClass]="{'is-invalid': !this.authService.form.get('telefono').valid}"
+    class="input-field col s12" style="border-radius: 5px; color:black;" required>
+
       <div class="bar">
         <i></i>
       </div>
-      <br>
-  </form>
-  <form [formGroup]="registerForm">
-    <label style="margin-left: 25px; color: dimgray;"><b style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 18px;">   Correo Electrónico : </b></label>
-    <input type="email" formControlName="email"  class="input-field col s12" placeholder="Correo" style="border-radius: 5px; color: #e20613;">
-    <div class="bar">
-      <i></i>
-    </div>    
+
+      <div *ngIf="this.authService.form.controls['telefono'].errors?.required" class="invalid-feedback">
+        El número de teléfono es necesario
+      </div>
+      <div *ngIf="this.authService.form.controls['telefono'].errors?.minlength" class="invalid-feedback">
+        El teléfono debe contener 10 caracteres 
+      </div>
+
     <br>
-    <label style="margin-left: 25px; color: dimgray;"><b style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 18px;">   Contraseña : </b></label>
-    <input type="password"  class="input-field col s12" formControlName="password" placeholder="Contraseña" style="border-radius: 5px; color: #e20613;">
-    <label class="error">{{errorMessage}}</label>
-    <label class="success">{{successMessage}}</label>
+
+    <label style="margin-left: 25px; color: dimgray;"><b style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 18px;">   Correo Electrónico : </b></label>
+    <input type="email" formControlName="mail"  class="input-field col s12" placeholder="Correo" style="border-radius: 5px; color:black;" required>
+    
     <div class="bar">
       <i></i>
     </div>  
+
+  </form>
+  <form [formGroup]="registerForm">
+      
+    <br>
+    <label style="margin-left: 25px; color: dimgray;"><b style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 18px;">   Contraseña : </b></label>
+    <input type="password"  class="input-field col s12" formControlName="password" placeholder="Contraseña" style="border-radius: 5px; color:black;" required>
+    
+    <div class="bar">
+      <i></i>
+    </div>  
+
+    <br>
+    <br>
+
+    <label class="error">{{errorMessage}}</label>
+    <label class="success">{{successMessage}}</label>
+
     <div class= "wrap" >
-      <button  (click)="onSubmit()" class="btn btn-default btn-block" ><b>Registro</b></button>
+      <button  (click)="onSubmit()" class="btn btn-default btn-block"><b>Registro</b></button>
     </div>
   </form>
 </div>

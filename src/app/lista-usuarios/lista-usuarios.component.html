@@ -26,9 +26,7 @@
         <th style="font-size: 16px; color: floralwhite; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;"><b>Nombre</b></th>
         <th style="font-size: 16px; color: floralwhite; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;"><b>Tipo ID</b></th>
         <th style="font-size: 16px; color: floralwhite; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;"><b>Número De Identificación</b></th>
-        <th style="font-size: 16px; color: floralwhite; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;"><b>Ciudad</b></th>
         <th style="font-size: 16px; color: floralwhite; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;"><b>Entidad</b></th>
-        <th style="font-size: 16px; color: floralwhite; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;"><b>Perfil</b></th>
         <th style="font-size: 16px; color: floralwhite; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;"><b>Correo</b></th>
         <th style="font-size: 16px; color: floralwhite; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;"><b>Teléfono</b></th>  
         <th style="font-size: 16px; color: floralwhite; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;"><b>IMEI</b></th>   
@@ -42,9 +40,7 @@
             <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{order.nombre}}</td>
             <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{order.tipoId}}</td>
             <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{ order.id }}</td>
-            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"></td>
             <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{ order.entidad }}</td> 
-            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{ order.perfil}}</td>
             <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{ order.mail }}</td>
             <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{ order.telefono}}</td> 
             <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{ order.IMEI}}</td>

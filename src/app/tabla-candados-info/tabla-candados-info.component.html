@@ -24,9 +24,8 @@
     <table mdbTable #tableEl="mdbTable" class="table">
       <thead>
       <tr>
-        <th style="font-size: 16px; color: floralwhite; font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;"><b>Identificador</b></th>
+        <th style="font-size: 16px; color: floralwhite; font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;"><b>Candado</b></th>
         <th style="font-size: 16px; color: floralwhite; font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;"><b>Estado</b></th>
-        <th style="font-size: 16px; color: floralwhite; font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;"><b>Estación</b></th>
         <th style="font-size: 16px; color: floralwhite; font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;"><b>Editar</b></th>   
       </tr>
       </thead>
@@ -36,7 +35,6 @@
             scope="row">{{order.ciudad}}</th> -->
             <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" >{{ order.nombreCandado }}</td>
             <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{ order.permiso }}</td>
-            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{ order.idEstacion }}</td>
             <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"><a (click)="verAdmin(order.nombreCandado)" class="btn btn-outline-danger btn-block; home"  style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 16px;"><b style="color: firebrick;" >Editar</b></a></td>
             
       </tr>
