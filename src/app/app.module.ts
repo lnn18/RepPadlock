@@ -28,6 +28,7 @@ import { TablaCandadosInfoComponent } from './tabla-candados-info/tabla-candados
 import { AdminCandadoComponent } from './admin-candado/admin-candado.component';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
+import { UserRegisterComponent } from './user-register/user-register.component';
 
 
 
@@ -40,7 +41,8 @@ import { HttpClientModule } from '@angular/common/http';
     TablaCandadosComponent,
     ListaUsuariosComponent,
     TablaCandadosInfoComponent,
-    AdminCandadoComponent  
+    AdminCandadoComponent,
+    UserRegisterComponent  
   ],
   exports: [
     AdminCandadoComponent,

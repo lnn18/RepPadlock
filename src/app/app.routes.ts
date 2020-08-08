@@ -11,6 +11,7 @@ import { UserResolver } from './user-component/user.resolver';
 import {ListaUsuariosComponent } from './lista-usuarios/lista-usuarios.component';
 import { TablaCandadosInfoComponent } from './tabla-candados-info/tabla-candados-info.component';
 import { AdminCandadoComponent } from './admin-candado/admin-candado.component'
+import { UserRegisterComponent } from './user-register/user-register.component'
 
 
 // Importacion de servicio de autoguardado
@@ -23,6 +24,7 @@ export const rootRouterConfig: Routes = [
   { path: 'login', component: LoginComponentComponent, canActivate: [AuthguardService] },
   { path: 'register', component: RegisterComponentComponent, resolve: {data: UserResolver} },
   { path: 'register1', component: RegisterComponentComponent,resolve: {data: UserResolver}},
+  { path: 'register2', component: UserRegisterComponent,resolve: {data: UserResolver}},
   { path: 'user', component: UserComponentComponent, resolve: {data: UserResolver}},
   { path: 'candados', component: TablaCandadosComponent, resolve: {data: UserResolver}},
   { path: 'listaUsuario', component: ListaUsuariosComponent, resolve: {data: UserResolver}},

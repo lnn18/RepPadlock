@@ -49,12 +49,20 @@ export class CandadoServiceService {
     return this.firestore.collection("ciudad", ref => ref .where('ID', "==", Id)).snapshotChanges();
   }
 
+  public getIdByCiudad(ciudad: string) {
+    return this.firestore.collection("ciudad", ref => ref .where('nombreCiudad', "==", ciudad)).snapshotChanges();
+  }
+
   getInfoCandado(){ //Se obtiene información de la tabla registro 
     return this.firestore.collection("candado", ref => ref .orderBy('nombreCandado', "asc")).snapshotChanges();
   }
 
   getEstacion(){ //Se obtiene información de la tabla registro 
     return this.firestore.collection("estacion", ref => ref).snapshotChanges();
+  }
+
+  getCiudades(){ //Se obtiene información de la tabla registro 
+    return this.firestore.collection("ciudad", ref => ref).snapshotChanges();
   }
 
   enviarNombre(nombreCand: string){
