@@ -23,7 +23,7 @@
       <option  value="0" > {{ nombreEst.nombreEstacion }} </option>
     </select>
     <br>
-    <form [formGroup]="this.authService.form1" (ngSubmit)="onSubmit1()">
+    <form [formGroup]="this.authService.form1" (ngSubmit)="candadoUpd()">
     <label style="margin-left: 25px; color: dimgray;"><b style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 18px;">  IMEI 1 : </b></label>
     <input  placeholder= {{ord.IMEI_1}} mdInput formControlName="IMEI_1"
       type="text" 
@@ -49,9 +49,13 @@
       </div>
     <br>
     <br>
-      <button  (click)="onSubmit1()" class="btn btn-default btn-block" style="margin-left: 30px;"><b>Actualizar</b></button>
+      <button  (click)="candadoUpd()" class="btn btn-default btn-block" style="margin-left: 30px;"><b>Actualizar</b></button>
     <br>
+    <div>
+      <label class="success">{{ mensaje }}</label>
+  </div>
   </form>
+  
 </div>
 
 </div>

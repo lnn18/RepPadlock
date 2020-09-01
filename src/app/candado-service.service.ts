@@ -23,10 +23,75 @@ export class CandadoServiceService {
               private http: HttpClient) { }
 
   getInformacionRegistro(){//Se obtiene información de la tabla registro 
+    // return this.firestore.collection("Registro", ref => ref)
+    // //.orderBy(this.fechaHora,'desc')
+    // .snapshotChanges()
+
     return this.firestore.collection("Registro", ref => ref)
     //.orderBy(this.fechaHora,'desc')
     .snapshotChanges()
+
+    // return this.firestore.collection("Registro", ref => ref.orderBy("estado","desc").limit(20))
+    // //.orderBy(this.fechaHora,'desc')
+    // .snapshotChanges()
   }
+
+   getInformacionRegistroDate(startDate: Date, endDate: Date){//Se obtiene información de la tabla registro 
+    console.log('fecha de filtrado inicio : ',startDate)
+    console.log('fecha de filtrado final : ',endDate)
+    return this.firestore.collection("Registro", ref => ref.where("toDate(fechaHora)", ">", startDate)
+    ).snapshotChanges();
+    //.orderBy(this.fechaHora,'desc')
+    
+  }
+
+  // getInformacionRegistroDateArray(startDate: Date, endDate: Date){//Se obtiene información de la tabla registro 
+  //   console.log('fecha de filtrado inicio : ',startDate)
+  //   console.log('fecha de filtrado final : ',endDate)
+  //   let Candados: any[] = []; 
+  //   this.firestore.collection("Registro", ref => ref.where('fechaHora', '>', startDate)).get().subscribe(data => {
+  //     console.log('revision de datos filtrados - ')
+  //     data.forEach(function(doc) {
+  //       // doc.data() is never undefined for query doc snapshots
+  //       console.log('Salida query ',doc.id, " => ", doc.data());
+  //   });
+  //   })
+
+    getInformacionRegistroDateArray(startDate: Date, endDate: Date){//Se obtiene información de la tabla registro 
+      console.log('fecha de filtrado inicio : ',startDate)
+      console.log('fecha de filtrado final : ',endDate)
+      let Candados: any; 
+      Candados = this.firestore.collection("Registro", ref => ref.where('fechaHora', '>', startDate)).snapshotChanges()
+
+      console.log('Registro en array : ',Candados)
+      
+          //this.firestore.collection('Registro', ref => ref.where('fechaHora', '>', startDate);
+        
+    return Candados
+    
+    // db.collection("cities").where("capital", "==", true)
+    // .get()
+    // .then(function(querySnapshot) {
+    //     querySnapshot.forEach(function(doc) {
+    //         // doc.data() is never undefined for query doc snapshots
+    //         console.log(doc.id, " => ", doc.data());
+    //     });
+    // })
+    // .catch(function(error) {
+    //     console.log("Error getting documents: ", error);
+    // });
+   
+    //.orderBy(this.fechaHora,'desc')
+    
+  }
+  // .where('fechaHora', '<=', endDate)
+  // getInformacionRegistroDate(startDate: Date, endDate: Date){//Se obtiene información de la tabla registro 
+  //   return this.firestore.collection("Registro", ref => ref.where('dueDate', '>', startDate)
+  //   .where('dueDate', '<', endDate))
+  //   .snapshotChanges
+  //   //.orderBy(this.fechaHora,'desc')
+    
+  // }
 
   public getOneRegister(documentId: string) {
     return this.firestore.collection('Registro').doc(documentId).snapshotChanges();

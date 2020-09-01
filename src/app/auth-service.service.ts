@@ -4,6 +4,7 @@ import { AngularFirestore } from "@angular/fire/firestore";
 import {Observable} from 'rxjs';
 import * as firebase from 'firebase/app';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import { param } from 'jquery';
 //import 'rxjs/add/operator/toPromise';
 
 
@@ -13,6 +14,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 //
 export class AuthServiceService {
   private user: Observable<firebase.User | null >;
+  mensaje: string = '';
 
   constructor(
     public afAuth: AngularFireAuth,
@@ -153,9 +155,90 @@ export class AuthServiceService {
     });
   }
 
+  updateCollectionCandado(idDoc, parameter, value){
+    let mensaje_res = ''
+
+    if(parameter == 'IMEI_1'){
+      let registerCollection = this.firestore.collection('candado').doc(idDoc)
+      registerCollection.update({
+        IMEI_1: value
+      }).then(function() {
+        console.log('Parametro actualizado correctamente : ',value, ' idDoc : ',idDoc);
+        //this.mensaje = this.mensaje + '- Parametro IMEI_1 actualizado correctamente - \n';
+      }).catch(function(error) {
+        // this.mensaje = this.mens6his.firestore.collection('candado').doc(idDoc)
+      })
+    }      
+      
+    if(parameter == 'IMEI_2'){
+      let registerCollection = this.firestore.collection('candado').doc(idDoc)
+      registerCollection.update({
+        IMEI_2: value
+      }).then(function() {
+        console.log('Parametro actualizado correctamente : ',value, ' idDoc : ',idDoc)
+        mensaje_res = '- Parametro IMEI_2 actualizado correctamente';
+      }).catch(function(error) {
+        mensaje_res = '- ERROR actualizando parametro IMEI_2 - \n';
+        console.log('Error actualizando documento : ', parameter)
+      })
+    }
+
+    if(parameter == 'IMEI_3'){
+      let registerCollection = this.firestore.collection('candado').doc(idDoc)
+      registerCollection.update({
+        IMEI_3: value
+      }).then(function() {
+        console.log('Parametro actualizado correctamente : ',value, ' idDoc : ',idDoc)
+        // this.mensaje = this.mensaje + '- Parametro IMEI_3 actualizado correctamente - \n'
+      }).catch(function(error) {
+        console.log('Error actualizando documento : ', parameter)
+        // this.mensaje = this.mensaje + '- ERROR actualizando parametro IMEI_3 - \n'
+      })
+    }
+
+    if(parameter == 'idEstacion'){
+      let registerCollection = this.firestore.collection('candado').doc(idDoc)
+      registerCollection.update({
+        idEstacion: value
+      }).then(function() {
+        console.log('Parametro actualizado correctamente : ',value, ' idDoc : ',idDoc)
+        // this.mensaje = this.mensaje + '- Parametro ESTACION actualizado correctamente - \n'
+      }).catch(function(error) {
+        this.mensaje = this.mensaje + '- ERROR actualizando parametro ESTACION - \n'
+        // console.log('Error actualizando documento : ', parameter)
+      })
+    }
+    console.log('Mensaje salida : ',mensaje_res)
+    return mensaje_res
+
+  }
+
   //Método para crear usuarios en firebase
-  updateCandado(ID, data1) {
-      this.firestore.doc('candado/' + ID).update(data1);
+  updateCandado(data1, idEst, candado) {
+    let mensaje_resp = ''
+    console.log('Llamado correcto a función auth', data1['IMEI_2'], ' Id estacion : ', idEst, ' idCandado : ', candado)
+    if(data1['IMEI_1'] != ''){
+      console.log('Cambio en IMEI_1 : ',data1['IMEI_1']);
+      this.updateCollectionCandado(candado, 'IMEI_1', data1['IMEI_1']);
+    }
+    if(data1['IMEI_2'] != ''){
+      console.log('Cambio en IMEI_2 : ',data1['IMEI_2']);
+      mensaje_resp = this.updateCollectionCandado(candado, 'IMEI_2', data1['IMEI_2']);
+
+    }
+    if(data1['IMEI_3'] != ''){
+      console.log('Cambio en IMEI_3 : ',data1['IMEI_3']);
+      this.updateCollectionCandado(candado, 'IMEI_3', data1['IMEI_3']);
+    }
+    if(idEst != ''){
+      console.log('Cambio en estación : ', idEst);
+      this.updateCollectionCandado(candado, 'idEstacion', idEst);
+    }
+
+    return 'Registro actualizado correctamente'
+    // if(data1)  
+    //this.firestore.doc('candado/' + ID).update(data1);
+    //RETURN  RETORNAR CADENA CON LOS CAMPOS QUE SE HAYAN ACTUALIZADO, LIGADO A UN PROMISE LA CONCATENACIÓN DE LA CADENA
   }
 
 }

@@ -28,6 +28,10 @@ export class AdminCandadoComponent implements OnInit {
   idEst : string = "";
   idEst1 : string = "";
   nombreEst : any = []
+  idEstaciones: any[] = [];
+  idCandado: any[] = [];
+  idPadlock : string;
+  mensaje: string;
 
   constructor(
     public candado: CandadoServiceService,
@@ -64,12 +68,14 @@ export class AdminCandadoComponent implements OnInit {
     this.info = [];
 
     for (let ord of resp){
+      this.idCandado.push(ord.payload.doc.id)
       this.info.push(ord.payload.doc.data());
     }
 
     for(let i = 0; i < this.info.length; i++){
       this.idEst = this.info[i].idEstacion;
     }
+    this.idPadlock = this.idCandado[0];
     this.getEstacion();
       
   });
@@ -87,6 +93,7 @@ export class AdminCandadoComponent implements OnInit {
   });
 
   capturar(){
+    console.log('Estación capturada : ', this.estacion)
     this.seleccion = this.estacion;
     this.getId1();
   }
@@ -95,14 +102,14 @@ export class AdminCandadoComponent implements OnInit {
   .getId(this.seleccion)
   .subscribe(resp => {
     this.info1 = [];
+    this.idEstaciones = [];
 
     for (let ord1 of resp){
+      this.idEstaciones.push(ord1.payload.doc.id)
       this.info1.push(ord1.payload.doc.data());
     }
-
-    for(let i = 0; i < this.info1.length; i++){
-      this.idEst1 = this.info[i].idEstacion;
-    }
+    this.idEst1 = this.idEstaciones[0];
+    console.log('ID estación capturado : ',this.idEst1)
 
   });
 
@@ -115,11 +122,22 @@ export class AdminCandadoComponent implements OnInit {
 
   });
 
-  onSumbit1(){
+  // candadoUpd = () => this.authService.updateCandado();
+  
+  candadoUpd(){
     let data1 = this.authService.form1.value;
-
-    this.authService.updateCandado(this.idEst, data1);
+    
+    // console.log('redifinicion ok data : ', data1);
+    this.mensaje = this.authService.updateCandado(data1, this.idEst1, this.idPadlock)
+    console.log('Mensaje obtenido en funcion principal : ', this.mensaje)
 
   }
+  // {
+
+  //   let data1 = this.authService.form1.value;
+  //   console.log('Información de candado : ', data1)
+  //   //this.authService.updateCandado(this.idEst, data1);
+
+  // }
 
 }

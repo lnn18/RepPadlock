@@ -8,7 +8,7 @@ import { UserComponentComponent } from './user-component/user-component.componen
 import { RegisterComponentComponent } from './register-component/register-component.component';
 import { TablaCandadosComponent } from './tabla-candados/tabla-candados.component'
 import { UserResolver } from './user-component/user.resolver';
-import {ListaUsuariosComponent } from './lista-usuarios/lista-usuarios.component';
+import { ListaUsuariosComponent } from './lista-usuarios/lista-usuarios.component';
 import { TablaCandadosInfoComponent } from './tabla-candados-info/tabla-candados-info.component';
 import { AdminCandadoComponent } from './admin-candado/admin-candado.component'
 import { UserRegisterComponent } from './user-register/user-register.component'

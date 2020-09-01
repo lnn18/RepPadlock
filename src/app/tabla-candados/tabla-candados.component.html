@@ -14,8 +14,8 @@
         <div class="col-md-12 mx-auto">
           <div class="md-form">
                        
-            <p style="color: dimgray; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 18px;"><b>Fecha :</b><br>
-              <input type="date" [(ngModel)]="searchDate"  (change)="busquedaFecha($event)" style="border-radius: 5px; color: dimgray">
+            <p style="color: dimgray; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 18px;"><b>Fecha  :</b><br>
+              <input type="date" [(ngModel)]="searchDate"  (change)="searchItems($event)" style="border-radius: 5px; color: dimgray">
             </p>
             <p>
             <label for="search" style="color: dimgray; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 18px;"><b>Filtrar Por :</b></label><br>
@@ -24,7 +24,7 @@
           </div>
         </div>
     </div>  
-    <table mdbTable #tableEl="mdbTable" class="table" id="excel-table">
+    <table mdbTable #tableEl="mdbTable" class="table" id="example">
       <thead>
       <tr>
           
@@ -63,7 +63,9 @@
       </tfoot>
     </table>
 
-    <button class="btn btn-outline-danger btn-block; home" style="margin-left: 900px;margin-top: 10px; margin-bottom: 15px ;font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 16px;" (click)="exportexcel()"><b>Exportar</b></button>
+    <div><button class="btn btn-outline-danger btn-block; home" style="margin-left: 900px;margin-top: 10px; margin-bottom: 15px ;font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 16px;" (click)="exportexcel()"><b>Exportar a excel</b></button></div>  
+    <div><button class="btn btn-outline-danger btn-block; home" style="margin-left: 900px;margin-top: 10px; margin-bottom: 15px ;font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 16px;" (click)="exportCSV()"><b>Exportar a CSV</b></button></div>  
+    
 
   </div>
 
