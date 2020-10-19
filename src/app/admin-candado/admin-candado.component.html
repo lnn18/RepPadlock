@@ -23,7 +23,7 @@
       <option  value="0" > {{ nombreEst.nombreEstacion }} </option>
     </select>
     <br>
-    <form [formGroup]="this.authService.form1" (ngSubmit)="candadoUpd()">
+    <form [formGroup]="this.authService.form1">
     <label style="margin-left: 25px; color: dimgray;"><b style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 18px;">  IMEI 1 : </b></label>
     <input  placeholder= {{ord.IMEI_1}} mdInput formControlName="IMEI_1"
       type="text" 

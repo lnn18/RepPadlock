@@ -68,7 +68,15 @@ export class TablaCandadosComponent implements OnInit, AfterViewInit { // se agr
         }
 
         for(let i = 0; i < this.Candados.length; i++){
-          this.dateTrans = new Date(this.Candados[i].fechaHora);
+          // if(this.Candados[i].ts_date < 99999999999){
+          //   const dateTrans = new Date(this.Candados[i].ts_date*1000);
+          // }else{
+          //   const dateTrans = new Date(this.Candados[i].ts_date);
+          // }
+          this.dateTrans = new Date(this.Candados[i].ts_date*1000);
+          // const date_string = new Date(this.Candados[i].ts_date*1000).toLocaleDateString();
+          
+          //this.dateTrans = new Date(this.Candados[i].ts_date*1000);
           // let month = (this.dateTrans.getUTCMonth() + 1).toString(); //months from 1-12
           // let day = this.dateTrans.getUTCDate().toString();
           // let year = this.dateTrans.getUTCFullYear().toString();
@@ -81,7 +89,7 @@ export class TablaCandadosComponent implements OnInit, AfterViewInit { // se agr
           // console.log('Hora cadenas : ',this.dateTrans);
           // this.newDate=this.dateTrans;
           this.newDate = new Date(this.dateTrans);
-          this.Candados[i].fechaHora = this.newDate;
+          this.Candados[i].fechaHora = this.dateTrans;
         }
         
         // console.log('breakpoint 1');

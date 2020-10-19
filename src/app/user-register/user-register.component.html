@@ -1,75 +1,75 @@
 <div class= "box">
-    <img src='../../assets/cadena.png'> 
- 
-    
-  </div>
-  <div class="container">
-    <a href="#" class="logo">Registro de Usuarios</a>
-    <nav>
-      <ul>
-        <li><a href="#" routerLink="/" >Home</a></li>
-        <li><a href="#" routerLink="/listaUsuario" >Usuarios</a></li>
-      </ul>
-    </nav>
-  </div>
-  <!-- <div>
-    <a  href="/user" class="btn btn-outline-danger btn-block; home" ng-click="active='home'" style="margin-left: 100px; margin-top: -15px; "><b style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 16px">Inicio</b></a>
+  <img src='../../assets/cadena.png'> 
+
+  
+</div>
+<div class="container">
+  <a href="#" class="logo">Registro de Usuarios</a>
+  <nav>
+    <ul>
+      <li><a href="#" routerLink="/" >Home</a></li>
+      <li><a href="#" routerLink="/listaUsuario" >Usuarios</a></li>
+    </ul>
+  </nav>
+</div>
+<!-- <div>
+  <a  href="/user" class="btn btn-outline-danger btn-block; home" ng-click="active='home'" style="margin-left: 100px; margin-top: -15px; "><b style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 16px">Inicio</b></a>
 </div> -->
 <nav></nav>
 
-  
+
 <div>
-    <form>
-        <div class="form-group">
-            <label for="nombres">Nombres y apellidos</label>
-            <input id="nombres" type="text" class="form-control" [(ngModel)]="persona" [ngModelOptions]="{standalone: true}">
-        </div>
-        <div class="form-group">
-            <label for="tipoID">Tipo de documento</label>
-            <select id="tipoID" class="form-control" [(ngModel)]="tipoID"  [ngModelOptions]="{standalone: true}">
-            <option  value="CC" > Cédula </option>
-            <option  value="CE" > Cédula de extrangería </option>
-          </select></div>
-        <div class="form-group">
-            <label for="numeroDoc">Número de documento</label>
-            <input id="numeroDoc" type="number" class="form-control" [(ngModel)]="numeroDoc" [ngModelOptions]="{standalone: true}">
-        </div>
-        <div class="form-group">
-            <label for="ciudadUsuario">Ciudad</label>
-            <select id="ciudadUsuario" class="form-control" [(ngModel)]="ciudadUsuario"  [ngModelOptions]="{standalone: true}">
-            <option  *ngFor="let city of Ciudades" > {{ city }} </option>
-          </select></div>
-        <div class="form-group">
-            <label for="IMEI">IMEI o identificador de app móvil</label>
-            <input id="IMEI" type="text" class="form-control" [(ngModel)]="numIMEI" [ngModelOptions]="{standalone: true}">
-        </div>
-        <div class="form-group">
-            <label for="entidad">Empresa</label>
-            <input id="entidad" type="text" class="form-control" [(ngModel)]="entidad" [ngModelOptions]="{standalone: true}">
-        </div>
-        <div class="form-group">
-            <label for="telefono">Número de teléfono</label>
-            <input id="telefono" type="number" class="form-control" [(ngModel)]="telefono" [ngModelOptions]="{standalone: true}">
-        </div>
-        <div class="form-group">
-            <label for="mail">e-mail</label>
-            <input id="mail" type="email" class="form-control" [(ngModel)]="mail" [ngModelOptions]="{standalone: true}">
-        </div>
-        <div class="form-group">
-            <label for="clave">Contraseña</label>
-            <input id="clave" type="password" class="form-control" [(ngModel)]="clave" [ngModelOptions]="{standalone: true}">
-        </div>
-        <div>
-            <label class="error">{{ errorMessage }}</label>
-        </div>
-        <div>
-            <label class="success">{{ successMessage }}</label>
-        </div>
-        <div>
-            <label class="success">{{ successMessage2 }}</label>
-        </div>
-        <div class="form-group">
-            <button class="btn btn-primary" (click)="onSubmit()" [disabled]="!persona || !tipoID || !numeroDoc || !ciudadUsuario || !numIMEI || !entidad || !telefono || !mail || !clave" >Crear usuario</button>
-        </div>
-    </form>
+  <form>
+      <div class="form-group">
+          <label for="nombres">Nombres y apellidos</label>
+          <input id="nombres" type="text" class="form-control" [(ngModel)]="persona" [ngModelOptions]="{standalone: true}">
+      </div>
+      <div class="form-group">
+          <label for="tipoID">Tipo de documento</label>
+          <select id="tipoID" class="form-control" [(ngModel)]="tipoID"  [ngModelOptions]="{standalone: true}">
+          <option  value="CC" > Cédula </option>
+          <option  value="CE" > Cédula de extrangería </option>
+        </select></div>
+      <div class="form-group">
+          <label for="numeroDoc">Número de documento</label>
+          <input id="numeroDoc" type="number" class="form-control" [(ngModel)]="numeroDoc" [ngModelOptions]="{standalone: true}">
+      </div>
+      <div class="form-group">
+          <label for="ciudadUsuario">Ciudad</label>
+          <select id="ciudadUsuario" class="form-control" [(ngModel)]="ciudadUsuario"  [ngModelOptions]="{standalone: true}">
+          <option  *ngFor="let city of Ciudades" > {{ city }} </option>
+        </select></div>
+      <div class="form-group">
+          <label for="IMEI">IMEI o identificador de app móvil</label>
+          <input id="IMEI" type="text" class="form-control" [(ngModel)]="numIMEI" [ngModelOptions]="{standalone: true}">
+      </div>
+      <div class="form-group">
+          <label for="entidad">Empresa</label>
+          <input id="entidad" type="text" class="form-control" [(ngModel)]="entidad" [ngModelOptions]="{standalone: true}">
+      </div>
+      <div class="form-group">
+          <label for="telefono">Número de teléfono</label>
+          <input id="telefono" type="number" class="form-control" [(ngModel)]="telefono" [ngModelOptions]="{standalone: true}">
+      </div>
+      <div class="form-group">
+          <label for="mail">e-mail</label>
+          <input id="mail" type="email" class="form-control" [(ngModel)]="mail" [ngModelOptions]="{standalone: true}">
+      </div>
+      <div class="form-group">
+          <label for="clave">Contraseña</label>
+          <input id="clave" type="password" class="form-control" [(ngModel)]="clave" [ngModelOptions]="{standalone: true}">
+      </div>
+      <div>
+          <label class="error">{{ errorMessage }}</label>
+      </div>
+      <div>
+          <label class="success">{{ successMessage }}</label>
+      </div>
+      <div>
+          <label class="success">{{ successMessage2 }}</label>
+      </div>
+      <div class="form-group">
+          <button class="btn btn-primary" (click)="onSubmit()" [disabled]="!persona || !tipoID || !numeroDoc || !ciudadUsuario || !numIMEI || !entidad || !telefono || !mail || !clave" >Crear usuario</button>
+      </div>
+  </form>
 </div>

@@ -3,6 +3,7 @@ import {AuthServiceService} from '../auth-service.service'
 import { FormBuilder, FormGroup, Validators, EmailValidator } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CandadoServiceService } from '../candado-service.service';
+import { NgbPaginationNumber } from '@ng-bootstrap/ng-bootstrap';
 // import { Ciudad } from '../ciudad.model'
 
 
@@ -30,6 +31,9 @@ export class UserRegisterComponent{
   telefono: string;
   mail: string;
   clave: string;
+  flagsFields: boolean;
+  errorFields: string;
+  charespecial : string;
   usuario: {
     IMEI: string,
     entidad: string,
@@ -66,9 +70,27 @@ export class UserRegisterComponent{
           this.Ciudades.push(order.payload.doc.data()['nombreCiudad']);
         }
         // console.log('las ciudades :', this.Ciudades, this.idCiudades);
+        //console.log('Ciudades : ',this.Ciudades)
       
     }, error => {
     });
+   }
+
+   validarCadena (cadena: string) {
+    this.charespecial = '|°¬!#$%&/()=?¡¿"+{}-.,;:[]~><^';
+    const text = cadena;
+    for (let i = 0; i < text.length; i++) {
+      for(let j = 0; j < this.charespecial.length; j++){
+        if(text.charAt(i) == this.charespecial.charAt(j)){
+          this.errorMessage = 'No se guardó usuario - error en nombres: caracter especial detectado ' + this.charespecial.charAt(j)
+          this.flagsFields = false
+          break;
+        }
+          
+          
+      }
+      
+    }
    }
 
 
@@ -76,6 +98,8 @@ export class UserRegisterComponent{
     // console.log('Id ciudades : ', this.idCiudad);
     // console.log('Objeto : ', this.usuario);
     // console.log('ciudad : ',this.ciudadUsuario);
+    this.flagsFields = true;
+    
     this.idCiudad = this.idCiudades[this.Ciudades.indexOf(this.ciudadUsuario)];
     this.usuario = {
       IMEI: this.numIMEI,
@@ -88,27 +112,48 @@ export class UserRegisterComponent{
       telefono: this.telefono.toString(),
       tipoId: this.tipoID
     }
-    this.authService.doRegister(this.mail, this.clave)
-     .then(res => {
-      //  console.log(res);
-       this.errorMessage = '';
-       this.successMessage = "Credenciales registradas";
-       this.authService.createUser(this.usuario)
-       .then(res => {
-        this.successMessage2 = "Usuario registrado en base de datos";
-       }, err => {
-        // console.log(err);
+
+    if( this.persona.length < 4){
+      this.errorMessage = 'No se guardó usuario - error: '
+      this.errorMessage += ' long. nombre menor a 4 caracteres'
+      console.log(this.errorMessage)
+      this.flagsFields = false;
+    }
+    if( this.clave.length < 6){
+      this.errorMessage = 'No se guardó usuario - error: '
+      this.errorMessage += ' long. contraseña menor a 6 caracteres'
+      console.log(this.errorMessage)
+      this.flagsFields = false;
+    }
+    this.validarCadena(this.persona);
+
+    
+
+    if (this.authService.form.valid) {
+      console.log('Invadlid lin detected') 
+    }
+    if(this.flagsFields){
+      this.authService.doRegister(this.mail, this.clave)
+      .then(res => {
+       //  console.log(res);
+        this.errorMessage = '';
+        this.successMessage = "Credenciales registradas";
+        this.authService.createUser(this.usuario)
+        .then(res => {
+         this.successMessage2 = "Usuario registrado en base de datos";
+        }, err => {
+         // console.log(err);
+         this.errorMessage = err.message;
+         this.successMessage = "";
+        });
+ 
+      }, err => {
+       //  console.log(err);
         this.errorMessage = err.message;
         this.successMessage = "";
-       });
-
-     }, err => {
-      //  console.log(err);
-       this.errorMessage = err.message;
-       this.successMessage = "";
-     }) 
-
-    if (this.authService.form.valid) { 
+      })    
     }
+ 
   }
+
 }

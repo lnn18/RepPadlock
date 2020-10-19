@@ -2,10 +2,14 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from "@angular/fire/firestore";
 import {Observable} from 'rxjs';
+import { Subject } from 'rxjs';
 import * as firebase from 'firebase/app';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import { param } from 'jquery';
-//import 'rxjs/add/operator/toPromise';
+import { CandadoServiceService } from './candado-service.service';
+import { async } from '@angular/core/testing';
+//import { ConsoleReporter } from 'jasmine';
+// import 'rxjs/add/operator/toPromise';
 
 
 @Injectable({
@@ -14,9 +18,22 @@ import { param } from 'jquery';
 //
 export class AuthServiceService {
   private user: Observable<firebase.User | null >;
+  nombreCand : string = '';
+  private enviarNombreSubject = new Subject<string>();
+  enviarNombreObservable = this.enviarNombreSubject.asObservable();
+  
+
+
+
+  
   mensaje: string = '';
+  imeis: any[] = [];
+  Ciudades: any[] = [];
+  idCiudades: any[] = [];
+  flagImei: boolean = false;
 
   constructor(
+    public imeiUser: CandadoServiceService,
     public afAuth: AngularFireAuth,
     private firestore: AngularFirestore
   ) {
@@ -72,7 +89,10 @@ export class AuthServiceService {
 
   }) 
   
-
+  enviarNombre(nombreCand: string){
+    this.nombreCand = nombreCand;
+    this.enviarNombreSubject.next(nombreCand);  
+    }
   //Metodo login facebook
   doFacebookLogin() {
     return new Promise<any>((resolve, reject) => {
@@ -212,30 +232,191 @@ export class AuthServiceService {
     return mensaje_res
 
   }
+  validarImei (imei: string) {
+
+//     this.imeiUser.getCiudades().subscribe(response =>{ 
+//       this.Ciudades = [];
+//       this.idCiudades = [];
+      
+//       for (let order of response) {
+//         this.idCiudades.push(order.payload.doc.id)
+//         this.Ciudades.push(order.payload.doc.data()['nombreCiudad']);
+//       }
+//       // console.log('las ciudades :', this.Ciudades, this.idCiudades);
+    
+//   }, error => {
+//   });
+//   this.imeiUser.getCiudades().subscribe(response =>{ 
+//     this.Ciudades = [];
+//     this.idCiudades = [];
+    
+//     for (let order of response) {
+//       this.idCiudades.push(order.payload.doc.id)
+//       this.Ciudades.push(order.payload.doc.data()['nombreCiudad']);
+//     }
+//     // console.log('las ciudades :', this.Ciudades, this.idCiudades);
+  
+// }, error => {
+// });
+//      console.log('Ciudades desde auth : ',this.Ciudades)
+    // //CONSULTA NO PROMESA
+    // this.imeiUser.imeiValidateNP(imei).subscribe(
+    //   response => {
+    //     this.imeis = [];
+    //     for (let order of response) {
+    //       //this.imeis.push(order.payload.doc.id)
+    //       this.imeis.push(order.payload.doc.data()['nombre']);
+    //       console.log('Imei leido auth : ', this.imeis)
+    //       if(this.imeis.length != 0){
+    //         console.log('flag true')
+    //         this.flagImei = true;
+    //       }else{
+    //         console.log('flag false')
+    //         this.flagImei = false;
+    //       }
+    //       console.log('Flag imei : ', this.flagImei)
+    //       return this.flagImei; 
+    //     }
+    //   }
+    // )
+
+    // CONSULTA CON PROMESA
+    this.imeiUser.imeiValidate(imei)
+    .then(async response => {
+          this.imeis = [];
+          let responses = [response]
+          for (let order of responses) {
+            //this.imeis.push(order.payload.doc.id)
+            this.imeis.push([order]);
+            // this.imeis.push(order.payload.doc.data()['nombre']);
+          }
+          console.log('Imeis en Admin - promise candado : ', this.imeis)
+          if(this.imeis.length != 0){
+            console.log('flag true')
+            this.flagImei = true;
+          }else{
+            console.log('flag false')
+            this.flagImei = false;
+          }
+    
+        }, err => {
+          // console.log(err);
+          this.mensaje = err.message;
+          //this.successMessage = "";
+         }
+    )
+
+    return this.flagImei;
+    //console.log('Imei leido : ', this.imeis)
+    //AGREGAR CONDICIÓN DE VALIDACIÓN
+    //AGREGAR UN RETURN BOOLEAN
+
+    
+
+  }
 
   //Método para crear usuarios en firebase
   updateCandado(data1, idEst, candado) {
     let mensaje_resp = ''
+    let imei_bool: boolean = false;
     console.log('Llamado correcto a función auth', data1['IMEI_2'], ' Id estacion : ', idEst, ' idCandado : ', candado)
     if(data1['IMEI_1'] != ''){
       console.log('Cambio en IMEI_1 : ',data1['IMEI_1']);
-      this.updateCollectionCandado(candado, 'IMEI_1', data1['IMEI_1']);
+      this.imeiUser.imeiValidateNP(data1['IMEI_1']).subscribe(
+        response => {
+          this.imeis = [];
+          console.log('bandera -in')
+          for (let order of response) {
+            //this.imeis.push(order.payload.doc.id)
+            this.imeis.push(order.payload.doc.data()['nombre']);
+            console.log('Imei leido auth : ', this.imeis)
+            if(this.imeis.length != 0){
+              console.log('flag true')
+              this.flagImei = true;
+              this.updateCollectionCandado(candado, 'IMEI_1', data1['IMEI_1']);
+              console.log('En consulta acutalizado imei usuario : ', this.imeis[0] )
+            }else{
+              console.log('flag false')
+              console.log('No existe usuario con imei : ', data1['IMEI_1'] )
+              this.flagImei = false;
+              mensaje_resp = 'No existe usuario'
+            }
+            console.log('Flag imei : ', this.flagImei)
+            
+          }
+        }
+      )
+      //imei_bool = this.validarImei(data1['IMEI_1']);
+      // if()
+      
     }
     if(data1['IMEI_2'] != ''){
       console.log('Cambio en IMEI_2 : ',data1['IMEI_2']);
-      mensaje_resp = this.updateCollectionCandado(candado, 'IMEI_2', data1['IMEI_2']);
+      this.imeiUser.imeiValidateNP(data1['IMEI_2']).subscribe(
+        response => {
+          this.imeis = [];
+          console.log('bandera -in')
+          for (let order of response) {
+            //this.imeis.push(order.payload.doc.id)
+            this.imeis.push(order.payload.doc.data()['nombre']);
+            console.log('Imei leido auth : ', this.imeis)
+            if(this.imeis.length != 0){
+              console.log('flag true')
+              this.flagImei = true;
+              this.updateCollectionCandado(candado, 'IMEI_2', data1['IMEI_2']);
+              console.log('En consulta acutalizado imei usuario : ', this.imeis[0] )
+            }else{
+              console.log('flag false')
+              console.log('No existe usuario con imei : ', data1['IMEI_2'] )
+              this.flagImei = false;
+              mensaje_resp = 'No existe usuario'
+            }
+            console.log('Flag imei : ', this.flagImei)
+            
+          }
+        }
+      )
+      
 
     }
     if(data1['IMEI_3'] != ''){
       console.log('Cambio en IMEI_3 : ',data1['IMEI_3']);
-      this.updateCollectionCandado(candado, 'IMEI_3', data1['IMEI_3']);
+          //CONSULTA NO PROMESA
+      this.imeiUser.imeiValidateNP(data1['IMEI_3']).subscribe(
+        response => {
+          this.imeis = [];
+          console.log('bandera -in')
+          for (let order of response) {
+            //this.imeis.push(order.payload.doc.id)
+            this.imeis.push(order.payload.doc.data()['nombre']);
+            console.log('Imei leido auth : ', this.imeis)
+            if(this.imeis.length != 0){
+              console.log('flag true')
+              this.flagImei = true;
+              this.updateCollectionCandado(candado, 'IMEI_3', data1['IMEI_3']);
+              console.log('En consulta acutalizado imei usuario : ', this.imeis[0] )
+            }else{
+              console.log('flag false')
+              console.log('No existe usuario con imei : ', data1['IMEI_3'] )
+              this.flagImei = false;
+              mensaje_resp = 'No existe usuario'
+            }
+            console.log('Flag imei : ', this.flagImei)
+            
+          }
+        }
+      )
+
+      // this.updateCollectionCandado(candado, 'IMEI_3', data1['IMEI_3']);
+      // imei_bool =  this.validarImei(data1['IMEI_3']);
+      // console.log('Return de función : ', imei_bool)
     }
     if(idEst != ''){
       console.log('Cambio en estación : ', idEst);
-      this.updateCollectionCandado(candado, 'idEstacion', idEst);
+      mensaje_resp += this.updateCollectionCandado(candado, 'idEstacion', idEst);
     }
 
-    return 'Registro actualizado correctamente'
+    return 'Se actualizará registros de IMEI solo si existe el usuario creado. Actualice página para verficar registros'
     // if(data1)  
     //this.firestore.doc('candado/' + ID).update(data1);
     //RETURN  RETORNAR CADENA CON LOS CAMPOS QUE SE HAYAN ACTUALIZADO, LIGADO A UN PROMISE LA CONCATENACIÓN DE LA CADENA

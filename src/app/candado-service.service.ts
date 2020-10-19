@@ -36,6 +36,19 @@ export class CandadoServiceService {
     // .snapshotChanges()
   }
 
+  getInformacionRegistroOpt(){//Se obtiene información de la tabla registro 
+    return this.firestore.collection("Registro", ref => ref.orderBy('ts_date','desc').limit(1000))
+    .snapshotChanges()
+
+    //return this.firestore.collection("Registro", ref => ref.limit(4000)).snapshotChanges()
+    
+    //.snapshotChanges()
+
+    // return this.firestore.collection("Registro", ref => ref.orderBy("estado","desc").limit(20))
+    // //.orderBy(this.fechaHora,'desc')
+    // .snapshotChanges()
+  }
+
    getInformacionRegistroDate(startDate: Date, endDate: Date){//Se obtiene información de la tabla registro 
     console.log('fecha de filtrado inicio : ',startDate)
     console.log('fecha de filtrado final : ',endDate)
@@ -147,6 +160,23 @@ export class CandadoServiceService {
   public getId(nombre: string) {
     return this.firestore.collection("estacion", ref => ref .where('nombreEstacion', "==", nombre)).snapshotChanges();
   }
+
+  imeiValidate (imei: string) {
+    
+    return this.firestore.collection("usuario", ref => ref .where('IMEI', "==", imei)).get().toPromise();
+
+  }
+
+  imeiValidateNP (imei: string) {
+    
+    return this.firestore.collection("usuario", ref => ref .where('IMEI', "==", imei)).snapshotChanges();
+
+  }
+
+  getTest(){
+    return this.firestore.collection("usuario").doc("HNpIt4y78kocsAvBis1E").get()
+  }
+
 
   public getOneEstacion(Id: string ) {
     return this.firestore.collection("estacion").doc(Id).snapshotChanges();
