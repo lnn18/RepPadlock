@@ -1,0 +1,71 @@
+
+
+<div class= "box">
+    <img src='../../assets/cadena.png'>
+</div>
+<br>
+<br>
+<a href="/user" class="btn btn-outline-danger btn-block; home" ng-click="active='home'" style="margin-left: 100px;margin-top: -15px; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 16px;"><b>Inicio</b></a>
+<div class='box'>
+  <h1 style="text-align: center; color: dimgray; font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif"><b>Tabla Historial De Candados</b></h1>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 mx-auto">
+          <div class="md-form">
+                       
+            <p style="color: dimgray; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 18px;"><b>Fecha  :</b><br>
+              <input type="date" [(ngModel)]="searchDate"  (change)="searchItems($event)" style="border-radius: 5px; color: dimgray">
+            </p>
+            <p>
+            <label for="search" style="color: dimgray; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 18px;"><b>Filtrar por :</b></label><br>
+            <input type="text" [(ngModel)]="searchText" id="search" mdbInput (ngModelChange)="searchItems($event)" style="border-radius: 5px; color: dimgray; margin-top: -10px;">
+            </p> 
+          </div>
+        </div>
+    </div>  
+    <table mdbTable #tableEl="mdbTable" class="table" id="example">
+      <thead>
+      <tr>
+          
+        <th style="font-size: 16px; color: floralwhite; font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;"><b>Fecha</b></th>
+        <th style="font-size: 16px; color: floralwhite; font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;"><b>Ciudad</b></th>
+        <th style="font-size: 16px; color: floralwhite; font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;"><b>Estado</b></th>
+        <th style="font-size: 16px; color: floralwhite; font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;"><b>Estación</b></th>
+        <th style="font-size: 16px; color: floralwhite; font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;"><b>Candado</b></th>
+        <th style="font-size: 16px; color: floralwhite; font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;"><b>Modo Apertura</b></th>
+        <th style="font-size: 16px; color: floralwhite; font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;"><b>Batería</b></th>
+        <th style="font-size: 16px; color: floralwhite; font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;"><b>Usuario</b></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let order of Candados; let i = index">
+       <!--  <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"
+            scope="row">{{order.ciudad}}</th> -->
+            
+            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"><span>{{ order.fechaHora  | date:'dd-MM-yyyy HH:mm:ss'}}</span><br></td>
+            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{order.ciudad}}</td>
+            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{ order.estado }}</td>
+            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{ order.estacion }}</td>
+            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{ order.identificador }}</td>
+            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{ order.modo }}</td>
+            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{ order.power }}</td>
+            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{ order.usuario }}</td> 
+                   
+      </tr>
+      </tbody>
+      <tfoot class="grey lighten-5 w-100">
+      <tr >
+        <td colspan="8"  >
+          <mdb-table-pagination [tableEl]="tableEl" [searchDataSource]="Candados"></mdb-table-pagination >
+        </td>
+      </tr>
+      </tfoot>
+    </table>
+
+    <div><button class="btn btn-outline-danger btn-block; home" style="margin-left: 900px;margin-top: 10px; margin-bottom: 15px ;font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 16px;" (click)="exportexcel()"><b>Exportar a excel</b></button></div>  
+    <div><button class="btn btn-outline-danger btn-block; home" style="margin-left: 900px;margin-top: 10px; margin-bottom: 15px ;font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 16px;" (click)="exportCSV()"><b>Exportar a CSV</b></button></div>  
+    
+
+  </div>
+

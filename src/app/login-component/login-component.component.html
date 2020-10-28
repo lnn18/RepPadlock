@@ -1,0 +1,39 @@
+
+<div class= "box">
+    <img src='../../assets/cadena.png' >
+    <br>
+    <br>
+</div>
+  <br>
+  <br>
+  <br>
+<div class="container" style="margin-top: 0px; margin-bottom: 0px;">
+  <div class= "box" style="text-align: center; margin-top: -0px; margin-bottom: 0px;">
+    <h1 class="header"  style="text-align: center; color: dimgray; margin-bottom: 10px; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif"><b>Ingreso Al Sistema</b></h1>
+  </div>
+  <br>
+  <br>
+<div class= "wrap" style="align-items: center; margin-top: -0px; ; margin-left: 400px">
+    <form [formGroup]="loginForm">
+      <div class="bar" >
+      <input type="email" formControlName="email" class="form-control" placeholder="email" required>
+      </div>
+      <i ></i>
+      <label class="error">{{errorMessage}}</label>
+      <div class="bar" >
+        <input  type="password" class="form-control" formControlName="password" placeholder="password" required>
+          <i></i>
+      </div>
+      <div>
+        <hr />
+      </div>
+      <div>
+          <button  type="submit" (click)="tryLogin(loginForm.value)" class="btn btn-default" href="/inicio">Ingresar</button>
+      </div>
+    </form>
+</div>
+</div>
+
+
+    
+  

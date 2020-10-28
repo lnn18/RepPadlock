@@ -1,0 +1,61 @@
+<div class= "box">
+    <img src='../../assets/cadena.png'>
+</div>
+<br>    
+<br>
+<a href="/user" class="btn btn-outline-danger btn-block; home" ng-click="active='home'" style="margin-left: 100px;margin-top: -15px; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 16px;"><b>Inicio</b></a>
+<div class='box'>
+  <h1 style="text-align: center; color: dimgray; font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif"><b>Administrar Candado</b></h1>
+</div>
+<br>
+
+
+<div class="container">
+  <div class= "wrap" style="align-items: center; margin-left: 200px; margin-right: 200px;">
+  <br>
+  
+  <label style="margin-left: 25px; color: dimgray;" ><b style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 22px; margin-left: 20px;" > Candado : {{nombreCand}} </b></label>
+  <br>
+  <label style="color: dimgray; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 18px; margin-left: 25px;"><b>  Estación :</b></label><br>
+    <select class="selectpicker; form-control" data-style="btn btn-outline-danger" id="Estaciones" name="Estaciones" [(ngModel)]="estacion" (change)="capturar()" >
+      <option  value="0" > {{ nombreEst.nombreEstacion }} </option>
+      <option *ngFor="let order of Estaciones">{{order.nombreEstacion}}</option>
+      <option  value="0" > {{ nombreEst.nombreEstacion }} </option>
+    </select>
+    <br>
+    <form [formGroup]="this.authService.form1">
+    <label style="margin-left: 25px; color: dimgray;"><b style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 18px;">  IMEI 1 : </b></label>
+    <input  placeholder= {{ord.IMEI_1}} mdInput formControlName="IMEI_1"
+      type="text" 
+      class="input-field col s12" style="border-radius: 5px; color: #e20613;" *ngFor="let ord of info">
+      <div class="bar">
+        <i></i>
+      </div>
+    <br>
+    <label style="margin-left: 25px; color: dimgray;"><b style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 18px;">  IMEI 2 : </b></label>
+    <input  placeholder= {{ord.IMEI_2}}   formControlName="IMEI_2"
+      type="text" 
+      class="input-field col s12" style="border-radius: 5px; color: #e20613;" *ngFor="let ord of info">
+      <div class="bar">
+        <i></i>
+      </div>
+    <br>
+    <label style="margin-left: 25px; color: dimgray;"><b style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 18px;">  IMEI 3 : </b></label>
+    <input  placeholder= {{ord.IMEI_3}}   formControlName="IMEI_3"
+      type="text" 
+      class="input-field col s12" style="border-radius: 5px; color: #e20613;" *ngFor="let ord of info">
+      <div class="bar">
+        <i></i>
+      </div>
+    <br>
+    <br>
+      <button  (click)="candadoUpd()" class="btn btn-default btn-block" style="margin-left: 30px;"><b>Actualizar</b></button>
+    <br>
+    <div>
+      <label class="success">{{ mensaje }}</label>
+  </div>
+  </form>
+  
+</div>
+
+</div>
