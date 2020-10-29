@@ -5,6 +5,7 @@ import { MdbTablePaginationComponent, MdbTableDirective } from 'angular-bootstra
 import * as XLSX from 'xlsx';
 import { ngxCsv } from 'ngx-csv/ngx-csv';
 import { stringify } from 'querystring';
+import { data } from 'jquery';
 
 
 @Component({
@@ -28,7 +29,7 @@ export class TablaCandadosComponent implements OnInit, AfterViewInit { // se agr
   previous2: any = [];
   searchDate:Date;
   searchDateInit:Date;
-  // searchDateGTM: Date;
+  //searchDateGTM: Date;
   fileName= 'ExcelSheet.xlsx';
   startDate = new Date('2020-07-01');
   endDate = new Date('2020-08-01');
@@ -56,10 +57,11 @@ export class TablaCandadosComponent implements OnInit, AfterViewInit { // se agr
     this.mdbTablePagination.calculateLastItemIndex();
     this.cdRef.detectChanges();
   }
+  
 
 
     getInformacionCandado = () => this.candado
-    .getInformacionRegistro()
+    .getInformacionRegistroOpt()
     .subscribe(response => { 
         this.Candados= [];
         
@@ -163,24 +165,56 @@ export class TablaCandadosComponent implements OnInit, AfterViewInit { // se agr
 
       
     
-    // }
+    // } 
+
+   
     
     searchItems(algo) {
+
+      let hours:number;  
+      let resultdata: any []=[];
       const prev = this.mdbTable.getDataSource();
-      let searchDateGTM = new Date(this.searchDate);
-      let dateGTM: string;
-      let horaMins: string;
-      // let timezoneoffset; 
+      let searchDateGTM: string; 
+      let datearray:string;
+      let datetemp: Date=new Date();
+
+
+      
+    
 
       if(this.searchDate){
         console.log('Fecha capturada del sistema : ', this.searchDate);
-        searchDateGTM.setHours(searchDateGTM.getHours()+5);
-        let month = (searchDateGTM.getUTCMonth() + 1).toString(); //months from 1-12
-        let day = searchDateGTM.getUTCDate().toString();
-        let year = searchDateGTM.getUTCFullYear().toString();
-        let hours = searchDateGTM.getHours().toString();
-        let mins = searchDateGTM.getMinutes().toString();
-        if(month.length == 1){
+        datearray=this.searchDate[8]+this.searchDate[9];
+        datetemp.setFullYear(parseInt(this.searchDate[0]+this.searchDate[1]+this.searchDate[2]+this.searchDate[3]));
+        datetemp.setMonth(parseInt(this.searchDate[5]+this.searchDate[6])-1);
+        datetemp.setDate(parseInt(this.searchDate[8]+this.searchDate[9]))
+
+        console.log("Setting date: "+ datetemp); 
+        
+        datetemp.setDate(datetemp.getDate()+1);
+        console.log("New date: "+ datetemp );
+        searchDateGTM=(datetemp.getFullYear()).toString()+"-";
+
+        if (datetemp.getMonth()+1<10)
+           searchDateGTM+="0"+(datetemp.getMonth()+1).toString()+"-";
+        else
+          searchDateGTM+=(datetemp.getMonth()+1).toString()+"-";
+        if (datetemp.getDate()<10)
+          searchDateGTM+="0"+(datetemp.getDate()).toString();
+        else
+         searchDateGTM+=(datetemp.getDate()).toString();
+ 
+        console.log("------>",searchDateGTM);
+       
+        /*
+       // let month = (searchDateGTM.getMonth() + 1).toString(); //months from 1-12
+       // let day = searchDateGTM.getDate().toString();
+       // let year = searchDateGTM.getFullYear().toString();
+       // let hours = searchDateGTM.getHours().toString();
+       // let mins = searchDateGTM.getMinutes().toString();
+        
+
+       // if(month.length == 1){
           month = '0' + month;
         }
         if(day.length == 1){
@@ -190,15 +224,43 @@ export class TablaCandadosComponent implements OnInit, AfterViewInit { // se agr
         dateGTM = year + "-" + month + "-" + day
         horaMins = ' ' + hours + ':' + mins
         // dateGTM = '2020-08-06';
-        console.log('Fecha con offset Timezone : ', searchDateGTM, ' Cadena fecha : ', dateGTM, horaMins);
-      }
+        //console.log('Fecha con offset Timezone : ', searchDateGTM, ' Cadena fecha : ', dateGTM, horaMins);
+      */}
   
       if (!this.searchText) {
         this.mdbTable.setDataSource(prev);
         this.Candados = this.mdbTable.getDataSource();
         if(this.searchDate){
-          // this.Candados = this.mdbTable.searchLocalDataBy(dateGTM);
-          this.Candados = this.mdbTable.searchLocalDataBy(this.searchDate);
+
+          console.log("future day");
+          this.Candados=[];
+
+          resultdata=this.mdbTable.searchLocalDataBy(searchDateGTM);
+          for (let arraylength=0;arraylength<resultdata.length;arraylength++){  
+            datetemp= new Date(resultdata[arraylength].fechaHora);
+            hours= datetemp.getHours();
+            if (hours>18){
+              console.log(datetemp+'' +hours+"------>"+resultdata[arraylength]);
+             
+              this.Candados.push(resultdata[arraylength]);
+            }
+    
+          }
+          console.log("today");
+
+          resultdata=this.mdbTable.searchLocalDataBy(this.searchDate);
+          for (let arraylength=0;arraylength<resultdata.length;arraylength++){  
+              datetemp= new Date(resultdata[arraylength].fechaHora);
+              hours= datetemp.getHours();
+              if (hours<19){
+                console.log(datetemp+'' +hours+"------>"+resultdata[arraylength]);
+              
+                this.Candados.push(resultdata[arraylength]);
+              }  
+            }
+          
+
+
         }
         
       }
