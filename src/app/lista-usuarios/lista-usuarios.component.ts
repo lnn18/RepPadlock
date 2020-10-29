@@ -16,8 +16,6 @@ export class ListaUsuariosComponent implements OnInit, AfterViewInit {
 
 
   lista:string[];
-
-
   Profile: any []=[];
   newDate: Date;
   newCity: string;
@@ -66,16 +64,11 @@ export class ListaUsuariosComponent implements OnInit, AfterViewInit {
     this.lista=[];
     for(let order of response){
         this.Profile.push(order.payload.doc.data());
-
     }
 
     for (let i=0; i<this.Profile.length;i++){
         this.lista[i]=this.Profile[i].descripcion;
-       // console.log(this.Profile[i].descripcion);  
-
-    }
-
-        
+          }  
   });
 
 
@@ -84,6 +77,7 @@ export class ListaUsuariosComponent implements OnInit, AfterViewInit {
   getInformacionUsuario = () => this.candado
     .getInformacionUsuario()
     .subscribe(response =>{
+     
       this.Usuario= [];
       this.Usuario_tmp=[];
   
@@ -91,8 +85,7 @@ export class ListaUsuariosComponent implements OnInit, AfterViewInit {
 
           this.Usuario.push(order.payload.doc.data());
           this.Usuario_tmp.push(order.payload.doc.data());
-          //console.log(this.Usuario);
-
+     
           for(let i = 0; i < this.Usuario.length; i++){
             this.Ucity[i] = this.Usuario[i].idCiudad;
             this.newCity = this.Usuario[i].idCiudad;
@@ -113,8 +106,6 @@ export class ListaUsuariosComponent implements OnInit, AfterViewInit {
         for(let i = 0; i < this.Usuario.length; i++){
           this.newDate=new Date(this.Usuario[i].fechaHora);
           this.Usuario[i].fechaHora = this.newDate;
-         // console.log(this.candado.getPerfil(this.Usuario[i].perfil));
-
           this.firestore.collection('perfil').doc(this.Usuario[i].perfil).get().subscribe
           (doc=>{
 
@@ -123,7 +114,6 @@ export class ListaUsuariosComponent implements OnInit, AfterViewInit {
           } else {
             this.Usuario[i].perfil=doc.data().descripcion;
             this.Usuario_tmp[i].perfil=this.Usuario[i].perfil;
-            //console.log('------->Document data:',  doc.data().descripcion);
           }
         });
      
@@ -183,19 +173,11 @@ export class ListaUsuariosComponent implements OnInit, AfterViewInit {
         for (let i=0;i<this.Usuario_tmp.length;i++){
           if (algo==this.Usuario_tmp[i].perfil){
             this.Usuario.push(this.Usuario_tmp[i]);
-            //console.log(this.Usuario_tmp[i]);
           }
         }  
-            
-       // this.Usuario.sort((a,b)=>b.fechaHora.getTime()-a.fechaHora.getTime());
-
         this.mdbTable.setDataSource(this.Usuario);//nuevo
         this.Usuario= this.mdbTable.getDataSource();
         this.previous = this.mdbTable.getDataSource();
-
-
-        
-       
     }
 }
 
