@@ -10,12 +10,14 @@ import { TablaCandadosComponent } from './tabla-candados/tabla-candados.componen
 import { UserResolver } from './user-component/user.resolver';
 import { ListaUsuariosComponent } from './lista-usuarios/lista-usuarios.component';
 import { TablaCandadosInfoComponent } from './tabla-candados-info/tabla-candados-info.component';
-import { AdminCandadoComponent } from './admin-candado/admin-candado.component'
-import { UserRegisterComponent } from './user-register/user-register.component'
+import { AdminCandadoComponent } from './admin-candado/admin-candado.component';
+import { UserRegisterComponent } from './user-register/user-register.component';
+import { ListaGruposComponent} from './lista-grupos/lista-grupos.component';
 
 
 // Importacion de servicio de autoguardado
 import { AuthguardService } from './authguard.service';
+import { from } from 'rxjs';
 enableProdMode(); 
 
 //path de navegacion y direccionamiento a su respectivo componente
@@ -29,6 +31,7 @@ export const rootRouterConfig: Routes = [
   { path: 'candados', component: TablaCandadosComponent, resolve: {data: UserResolver}},
   { path: 'listaUsuario', component: ListaUsuariosComponent, resolve: {data: UserResolver}},
   { path: 'candados1', component: TablaCandadosInfoComponent, resolve: {data: UserResolver}},
-  { path: 'admin', component: AdminCandadoComponent, resolve: {data: UserResolver}}
+  { path: 'admin', component: AdminCandadoComponent, resolve: {data: UserResolver}},
+  { path: 'grupos',component: ListaGruposComponent, resolve: {data:UserResolver}}
 ];
  

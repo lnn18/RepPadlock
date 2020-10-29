@@ -1,0 +1,65 @@
+<div class= "box">
+    <img src='../../assets/cadena.png'>
+</div>
+<br>
+<br>
+<a href="/user" class="btn btn-outline-danger btn-block; home" ng-click="active='home'" style="margin-left: 100px; margin-top: -15px; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-family: 16px;"><b>Inicio</b></a>
+<div class='box'>
+  <h1 style="text-align: center; color: dimgray; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif"><b>Grupos</b></h1>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 mx-auto">
+          <div class="md-form">                    
+            <p>
+            <label *ngFor="let order1 of prube1"> {{order1.ciudad}} </label>
+            <label for="search" style="color: dimgray; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 18px;"><b>Filtrar Por :</b></label><br>
+            <input type="text" [(ngModel)]="searchText" id="search" mdbInput (ngModelChange)="searchItems($event)" style="border-radius: 5px; margin-top: -10px;">
+            </p> 
+
+            <p>
+              <select name="miselect" [(ngModel)]="selectProfile" mdbInput  (ngModelChange)="SelectProfile($event)" >
+                <option [value]="item" *ngFor="let item of lista">{{item}}</option>
+              </select>
+
+            </p>
+          </div>
+        </div>
+    </div>  
+    <br>
+    <table mdbTable #tableEl="mdbTable" class="table">
+      <thead>
+      <tr>
+        <th style="font-size: 16px; color: floralwhite; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;"><b>Nombre</b></th>
+        <th style="font-size: 16px; color: floralwhite; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;"><b>Tipo ID</b></th>
+        <th style="font-size: 16px; color: floralwhite; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;"><b>Número De Identificación</b></th>
+        <th style="font-size: 16px; color: floralwhite; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;"><b>Entidad</b></th>
+        <th style="font-size: 16px; color: floralwhite; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;"><b>Correo</b></th>
+        <th style="font-size: 16px; color: floralwhite; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;"><b>Teléfono</b></th>  
+        <th style="font-size: 16px; color: floralwhite; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;"><b>IMEI</b></th>
+      </tr>
+      </thead>
+     <!-- <tbody>
+      <tr *ngFor="let order of Usuario; let i = index">
+       <!--  <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"
+            scope="row">{{order.ciudad}}</th> 
+            <span *ngFor="let order1 of City">{{order1.newCity}}</span>--
+            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{order.nombre}}</td>
+            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{order.tipoId}}</td>
+            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{ order.id }}</td>
+            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{ order.entidad }}</td> 
+            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{ order.mail }}</td>
+            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{ order.telefono}}</td> 
+            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{ order.IMEI}}</td>
+            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{ order.perfil}}</td>
+      </tr>
+      </tbody> -->
+      <tfoot class="grey lighten-5 w-100">
+      <tr >
+        <td colspan="8"  >
+          <mdb-table-pagination [tableEl]="tableEl" [searchDataSource]="Usuario"></mdb-table-pagination >
+        </td>
+      </tr>
+      </tfoot>
+    </table>
+  </div>
