@@ -16,6 +16,13 @@
             <label for="search" style="color: dimgray; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 18px;"><b>Filtrar Por :</b></label><br>
             <input type="text" [(ngModel)]="searchText" id="search" mdbInput (ngModelChange)="searchItems($event)" style="border-radius: 5px; margin-top: -10px;">
             </p> 
+
+            <p>
+              <select name="miselect" [(ngModel)]="selectProfile" mdbInput  (ngModelChange)="SelectProfile($event)" >
+                <option [value]="item" *ngFor="let item of lista">{{item}}</option>
+              </select>
+
+            </p>
           </div>
         </div>
     </div>  
@@ -29,7 +36,8 @@
         <th style="font-size: 16px; color: floralwhite; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;"><b>Entidad</b></th>
         <th style="font-size: 16px; color: floralwhite; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;"><b>Correo</b></th>
         <th style="font-size: 16px; color: floralwhite; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;"><b>Teléfono</b></th>  
-        <th style="font-size: 16px; color: floralwhite; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;"><b>IMEI</b></th>   
+        <th style="font-size: 16px; color: floralwhite; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;"><b>IMEI</b></th>
+        <th style="font-size: 16px; color: floralwhite; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;"><b>ROL</b></th>     
       </tr>
       </thead>
       <tbody>
@@ -44,6 +52,7 @@
             <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{ order.mail }}</td>
             <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{ order.telefono}}</td> 
             <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{ order.IMEI}}</td>
+            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{ order.perfil}}</td>
       </tr>
       </tbody>
       <tfoot class="grey lighten-5 w-100">

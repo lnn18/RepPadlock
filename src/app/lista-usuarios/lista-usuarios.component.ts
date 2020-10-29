@@ -13,10 +13,17 @@ export class ListaUsuariosComponent implements OnInit, AfterViewInit {
   @ViewChild(MdbTablePaginationComponent, { static: true }) mdbTablePagination: MdbTablePaginationComponent; //Se agregaron las lineas 14 y 15 para ejemplo de tabla
   @ViewChild(MdbTableDirective, { static: true }) mdbTable: MdbTableDirective;
   //fechaHora='';
+
+
+  lista:string[];
+
+
+  Profile: any []=[];
   newDate: Date;
   newCity: string;
   newCity1: any = [];
   //Data object for listing items
+  Usuario_tmp: any []=[];
   Usuario: any[] = []; 
   //Save first document in snapshot of items received
   previous: any = [];
@@ -25,6 +32,9 @@ export class ListaUsuariosComponent implements OnInit, AfterViewInit {
   searchDate:Date;
   City: any = [];
   Ucity: any = [];
+  
+
+  
 
   constructor(
     private candado: CandadoServiceService,
@@ -33,7 +43,8 @@ export class ListaUsuariosComponent implements OnInit, AfterViewInit {
     { }
 
   ngOnInit() {
-    this.getInformacionUsuario(); 
+    this.getProfile();
+    this.getInformacionUsuario();
     this.previous2 = this.mdbTable.getDataSource(); 
     //this.recorrer();  
     //this.getInformacionCiudad(); 
@@ -49,36 +60,77 @@ export class ListaUsuariosComponent implements OnInit, AfterViewInit {
 
   }
 
+
+  getProfile=()=> this.candado.getProfile().subscribe(response =>{
+    this.Profile=[];
+    this.lista=[];
+    for(let order of response){
+        this.Profile.push(order.payload.doc.data());
+
+    }
+
+    for (let i=0; i<this.Profile.length;i++){
+        this.lista[i]=this.Profile[i].descripcion;
+       // console.log(this.Profile[i].descripcion);  
+
+    }
+
+        
+  });
+
+
   //getOneCiudad1= () => this.candado;
 
   getInformacionUsuario = () => this.candado
     .getInformacionUsuario()
     .subscribe(response =>{
       this.Usuario= [];
+      this.Usuario_tmp=[];
+  
         for (let order of response) {
 
           this.Usuario.push(order.payload.doc.data());
+          this.Usuario_tmp.push(order.payload.doc.data());
+          //console.log(this.Usuario);
 
           for(let i = 0; i < this.Usuario.length; i++){
             this.Ucity[i] = this.Usuario[i].idCiudad;
             this.newCity = this.Usuario[i].idCiudad;
-          }
+           }
 
           this.getOneCiudad1  = () => this.candado .getOneCiudad(this.newCity).subscribe(resp => {
             //this.City= [];
             for(let ord1 of resp){
               this.City.push(ord1.payload.doc.data());
               for(let i = 0; i < this.Usuario.length; i++){
+                console.log (this.City.nombreCiudad);
                 this.Usuario[i].idCiudad = this.City.nombreCiudad;
               }
             }
         });
-
         }
 
         for(let i = 0; i < this.Usuario.length; i++){
           this.newDate=new Date(this.Usuario[i].fechaHora);
           this.Usuario[i].fechaHora = this.newDate;
+         // console.log(this.candado.getPerfil(this.Usuario[i].perfil));
+
+          this.firestore.collection('perfil').doc(this.Usuario[i].perfil).get().subscribe
+          (doc=>{
+
+          if (!doc.exists) {
+            console.log('No such document!');
+          } else {
+            this.Usuario[i].perfil=doc.data().descripcion;
+            this.Usuario_tmp[i].perfil=this.Usuario[i].perfil;
+            //console.log('------->Document data:',  doc.data().descripcion);
+          }
+        });
+     
+
+          //this.Usuario[i].perfil=this.candado.getPerfil(this.Usuario[i].perfil);
+          //this.Usuario[i].perfil=i;
+          //console.log(this.Usuario[i].perfil);
           //this.Ucity[i] = this.Usuario[i].idCiudad;
           //this.newCity = this.Usuario[i].idCiudad;
           /*this.getOneCiudad1  = () => this.candado .getOneCiudad(this.newCity).subscribe(resp => {
@@ -125,7 +177,28 @@ export class ListaUsuariosComponent implements OnInit, AfterViewInit {
       }
     }
 
+
+    SelectProfile(algo:string){
+        this.Usuario=[]
+        for (let i=0;i<this.Usuario_tmp.length;i++){
+          if (algo==this.Usuario_tmp[i].perfil){
+            this.Usuario.push(this.Usuario_tmp[i]);
+            //console.log(this.Usuario_tmp[i]);
+          }
+        }  
+            
+       // this.Usuario.sort((a,b)=>b.fechaHora.getTime()-a.fechaHora.getTime());
+
+        this.mdbTable.setDataSource(this.Usuario);//nuevo
+        this.Usuario= this.mdbTable.getDataSource();
+        this.previous = this.mdbTable.getDataSource();
+
+
+        
+       
+    }
 }
+
 
 
  /*//this.prube = [];

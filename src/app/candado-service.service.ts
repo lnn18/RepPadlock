@@ -123,6 +123,10 @@ export class CandadoServiceService {
     .snapshotChanges()
   }
 
+  getProfile(){
+    return this.firestore.collection("perfil", ref => ref .orderBy("descripcion","asc")).snapshotChanges();
+  }
+
   public getOneCiudad(Id: string) {
     return this.firestore.collection("ciudad", ref => ref .where('ID', "==", Id)).snapshotChanges();
   }
