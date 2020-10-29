@@ -166,8 +166,7 @@ export class ListaUsuariosComponent implements OnInit, AfterViewInit {
         this.mdbTable.setDataSource(prev);
       }
     }
-
-
+    
     SelectProfile(algo:string){
         this.Usuario=[]
         for (let i=0;i<this.Usuario_tmp.length;i++){
