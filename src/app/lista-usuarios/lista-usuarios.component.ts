@@ -106,33 +106,16 @@ export class ListaUsuariosComponent implements OnInit, AfterViewInit {
         for(let i = 0; i < this.Usuario.length; i++){
           this.newDate=new Date(this.Usuario[i].fechaHora);
           this.Usuario[i].fechaHora = this.newDate;
-          this.firestore.collection('perfil').doc(this.Usuario[i].perfil).get().subscribe
-          (doc=>{
-
-          if (!doc.exists) {
-            console.log('No such document!');
-          } else {
-            this.Usuario[i].perfil=doc.data().descripcion;
-            this.Usuario_tmp[i].perfil=this.Usuario[i].perfil;
-          }
-        });
-     
-
-          //this.Usuario[i].perfil=this.candado.getPerfil(this.Usuario[i].perfil);
-          //this.Usuario[i].perfil=i;
-          //console.log(this.Usuario[i].perfil);
-          //this.Ucity[i] = this.Usuario[i].idCiudad;
-          //this.newCity = this.Usuario[i].idCiudad;
-          /*this.getOneCiudad1  = () => this.candado .getOneCiudad(this.newCity).subscribe(resp => {
-              //this.City= [];
-                this.City.push(resp.payload.data())
-                this.Usuario[i].idCiudad = this.City.nombreCiudad;
-          });*/
-          //this.recorrer();
+          this.candado.getProfileAll(this.Usuario[i].perfil)
+            .then((resolve)=>this.Usuario[i].perfil=resolve)
+            .catch((reject)=>this.Usuario[i].perfil=reject);
+          this.candado.getProfileAll(this.Usuario[i].perfil)
+            .then((resolve)=>this.Usuario_tmp[i].perfil=resolve)
+            .catch((reject)=>this.Usuario_tmp[i].perfil=reject);
+          // console.log(this.Usuario_tmp[i].perfil);
+  
         }
 
-        //this.recorrer();
-        
         this.Usuario.sort((a,b)=>b.fechaHora.getTime()-a.fechaHora.getTime());
 
         this.mdbTable.setDataSource(this.Usuario);//nuevo

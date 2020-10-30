@@ -118,13 +118,25 @@ export class CandadoServiceService {
   } 
 
   getInformacionUsuario(){ //Se obtiene información de la tabla registro 
-    return this.firestore.collection("usuario", ref => ref)
-
-    .snapshotChanges()
+    return this.firestore.collection("usuario", ref => ref).snapshotChanges()
   }
 
   getProfile(){
     return this.firestore.collection("perfil", ref => ref .orderBy("descripcion","asc")).snapshotChanges();
+  }
+
+  getProfileAll(profile:any){
+    return new Promise<any>((resolve, reject)=>{
+      this.firestore.collection('perfil').doc(profile).get().subscribe
+          (doc=>{
+            if (!doc.exists) {
+              reject ('Perfil no asignado');
+            } else {
+              //console.log(doc.data().descripcion);
+              resolve (doc.data().descripcion);
+            }  
+          });
+    })
   }
 
   public getOneCiudad(Id: string) {
