@@ -12,8 +12,17 @@ export class GrupoServiceService {
 
   getGroupAll(){
       return this.db.collection('grupos').snapshotChanges();
-  }  
+  }
 
+  getGroupId(name:string){
+      return this.db.collection('grupos',ref => ref .where ('nombre','==',name)).snapshotChanges();
+
+  }
+
+  getLockbyGroups(grupo:any){
+    return this.db.collection("candado", ref => ref .where('grupo', "==", grupo)).snapshotChanges();
+  }
+  
 
 
 }
