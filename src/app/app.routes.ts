@@ -13,6 +13,7 @@ import { TablaCandadosInfoComponent } from './tabla-candados-info/tabla-candados
 import { AdminCandadoComponent } from './admin-candado/admin-candado.component';
 import { UserRegisterComponent } from './user-register/user-register.component';
 import { ListaGruposComponent} from './lista-grupos/lista-grupos.component';
+import {GrupoCandadosComponent} from './grupo-candados/grupo-candados.component';
 
 
 // Importacion de servicio de autoguardado
@@ -32,6 +33,7 @@ export const rootRouterConfig: Routes = [
   { path: 'listaUsuario', component: ListaUsuariosComponent, resolve: {data: UserResolver}},
   { path: 'candados1', component: TablaCandadosInfoComponent, resolve: {data: UserResolver}},
   { path: 'admin', component: AdminCandadoComponent, resolve: {data: UserResolver}},
-  { path: 'grupos',component: ListaGruposComponent, resolve: {data:UserResolver}}
+  { path: 'grupos',component: ListaGruposComponent, resolve: {data:UserResolver}},
+  { path: 'grupos/:gruposId',component: GrupoCandadosComponent, resolve: {data:UserResolver}}
 ];
  
