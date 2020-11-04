@@ -12,16 +12,16 @@
         <div class="col-md-12 mx-auto">
           <div class="md-form">                    
             <!-- <p>
-            <label for="search" style="color: dimgray; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 18px;"><b>Filtrar Por :</b></label><br>
             <input type="text" [(ngModel)]="searchText" id="search" mdbInput (ngModelChange)="searchItems($event)" style="border-radius: 5px; margin-top: -10px;">
             </p>  -->
 
-            <p>
-              <!-- <select name="miselect" [(ngModel)]="selectProfile" mdbInput  (ngModelChange)="SelectProfile($event)" >
-                <option [value]="item" *ngFor="let item of lista">{{item}}</option>
-              </select> -->
+            <!-- <p>
+              <label for="search" style="color: dimgray; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 18px;"><b>Filtrar Por :</b></label><br>
+              <select name="miselect" [(ngModel)]="selectGroup" mdbInput  (ngModelChange)="SelectGroup($event)" >
+                <option [value]="item" *ngFor="let item of selectobject">{{item}}</option>
+              </select>
 
-            </p>
+            </p> -->
           </div>
         </div>
     </div>  
@@ -30,11 +30,13 @@
       <thead>
       <tr>
         <th style="font-size: 16px; color: floralwhite; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;"><b>Nombre</b></th>
+        <th style="font-size: 16px; color: floralwhite; font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;"><b>Ver</b></th> 
       </tr>
       </thead>
       <tbody>
       <tr *ngFor="let order of groupobject; let i = index">
             <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{order.nombre}}</td>
+            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"><a (click)="gotoeditgroup(order.nombre)" class="btn btn-outline-danger btn-block; home"  style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 16px;"><b style="color: firebrick;" >Ver</b></a></td>
       </tr>
       </tbody>
       <tfoot class="grey lighten-5 w-100">
