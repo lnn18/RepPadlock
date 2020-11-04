@@ -30,6 +30,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { UserRegisterComponent } from './user-register/user-register.component';
 import { ListaGruposComponent } from './lista-grupos/lista-grupos.component';
+import { GrupoCandadosComponent } from './grupo-candados/grupo-candados.component';
 
 
 
@@ -44,7 +45,8 @@ import { ListaGruposComponent } from './lista-grupos/lista-grupos.component';
     TablaCandadosInfoComponent,
     AdminCandadoComponent,
     UserRegisterComponent,
-    ListaGruposComponent  
+    ListaGruposComponent,
+    GrupoCandadosComponent  
   ],
   exports: [
     AdminCandadoComponent,
