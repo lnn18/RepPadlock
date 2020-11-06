@@ -31,6 +31,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { UserRegisterComponent } from './user-register/user-register.component';
 import { ListaGruposComponent } from './lista-grupos/lista-grupos.component';
 import { GrupoCandadosComponent } from './grupo-candados/grupo-candados.component';
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import {MatDialogModule} from "@angular/material";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatButtonModule } from '@angular/material/button';
+import { NuevoCandadoGrupoComponent } from './nuevo-candado-grupo/nuevo-candado-grupo.component';
 
 
 
@@ -46,7 +51,9 @@ import { GrupoCandadosComponent } from './grupo-candados/grupo-candados.componen
     AdminCandadoComponent,
     UserRegisterComponent,
     ListaGruposComponent,
-    GrupoCandadosComponent  
+    GrupoCandadosComponent,
+    ConfirmDialogComponent,
+    NuevoCandadoGrupoComponent  
   ],
   exports: [
     AdminCandadoComponent,
@@ -63,9 +70,15 @@ import { GrupoCandadosComponent } from './grupo-candados/grupo-candados.componen
     RouterModule.forRoot(rootRouterConfig, { useHash: false }),
     DataTablesModule,
     FormsModule,
+    MatDialogModule,
+    MatButtonModule,
+    BrowserAnimationsModule,
     MDBBootstrapModule.forRoot(),
     CommonModule,
     HttpClientModule
+  ],
+  entryComponents: [
+    ConfirmDialogComponent
   ],
   providers: [AuthServiceService, UserserviceService, UserResolver, AuthguardService,CandadoServiceService],
   bootstrap: [AppComponent]
