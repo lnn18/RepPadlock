@@ -58,7 +58,6 @@ export class ListaGruposComponent implements OnInit, AfterViewInit {
 
   gotoeditgroup(route:string){
     this.router.navigate(["/grupos",route]);
- 
   }
 
 }

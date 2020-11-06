@@ -5,7 +5,9 @@
 <br>
 <a href="/user" class="btn btn-outline-danger btn-block; home" ng-click="active='home'" style="margin-left: 100px; margin-top: -15px; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-family: 16px;"><b>Inicio</b></a>
 <div class='box'>
-  <h1 style="text-align: center; color: dimgray; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif"><b>Grupo {{groupname}}</b></h1>
+  <h1 style="text-align: center; color: dimgray; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif"><b>Grupo {{groupname}}</b>
+    <a  href="/grupos/nuevocandado/{{groupname}}" class="btn btn-outline-danger btn-block; home" style="margin-left: 100px; margin-top: -15px; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-family: 16px;"><b>+ Agregar candado</b></a>
+  </h1>
 </div>
 <div class="container">
     <div class="row">
@@ -31,14 +33,14 @@
       <tr>
         <th style="font-size: 16px; color: floralwhite; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;"><b>Nombre</b></th>
         <th style="font-size: 16px; color: floralwhite; font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;"><b>Bateria</b></th>
-        <th style="font-size: 16px; color: floralwhite; font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;"><b>Editar</b></th>  
+        <th style="font-size: 16px; color: floralwhite; font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;"><b>Eliminar</b></th>  
       </tr>
       </thead>
       <tbody>
       <tr *ngFor="let order of locks; let i = index">
             <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{order.nombreCandado}}</td>
             <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{order.bateria}}</td>
-            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"><a (click)="gotoeditgroup(order.nombre)" class="btn btn-outline-danger btn-block; home"  style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 16px;"><b style="color: firebrick;" >Editar</b></a></td>
+            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"><a (click)="onclick(order.nombreCandado)" class="btn btn-outline-danger btn-block; home"  style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 16px;"><b style="color: firebrick;" >Eliminar</b></a></td>
       </tr>
       </tbody>
       <tfoot class="grey lighten-5 w-100">

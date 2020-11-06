@@ -1,0 +1,34 @@
+@font-face {
+	font-family: 'Lato';
+	font-style: normal;
+	font-weight: 400;
+	src: local('Lato Regular'), local('Lato-Regular'), url(http://themes.googleusercontent.com/static/fonts/lato/v7/qIIYRU-oROkIk8vfvxw6QvesZW2xOQ-xsNqO47m55DA.woff) format('woff');
+  }
+table, th, td {
+    border: 1px solid black;
+    align-items: center;
+  }
+  th {
+    border: 1px solid black;
+    padding-top: 24px;
+    padding-bottom: 24px;
+    text-align: center;
+    background-color: #e20613;
+    font-family: 'Lato';
+    color: black;
+  }
+
+   
+  
+#logo {
+	text-align: left;
+	
+}
+#logotipo {background-color: brown}
+
+p{
+  margin-left: 80px;
+}
+a{
+  margin-right: 10px;
+}
