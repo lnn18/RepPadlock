@@ -25,6 +25,7 @@ export class NuevoCandadoGrupoComponent implements OnInit {
   lockId:string='';
   candado:any[]=[];
   counter=0;
+  grupo:string='';
  
   
 
@@ -67,15 +68,20 @@ export class NuevoCandadoGrupoComponent implements OnInit {
 
   });
 
-  private addLockToGroup=()=>this.newgrouplocks.getIdLock(this.lockname).subscribe(response=>{
+ addLockToGroup=()=>this.newgrouplocks.getIdLock(this.lockname).subscribe(response=>{
        this.lockId='';
-    for( let order of response)
-        this.lockId=order.payload.doc.id;
+       this.candado=[];
+    for( let order of response){
+        this.lockId=order.payload.doc.id;}
 
-    for( let order of response)
-        this.candado.push(order.payload.doc.data());    
+    for( let order of response){
+        this.candado.push(order.payload.doc.data());}
+        this.grupo=this.candado[0].grupo;
+      
+    
         //this.newgrouplocks.addLockgroup(this.lockId,this.id);
       });
+
 
 
   confirmDialog(message:string){
@@ -88,31 +94,47 @@ export class NuevoCandadoGrupoComponent implements OnInit {
  
     dialogRef.afterClosed().subscribe(result => {
       if(result) {
-        console.log('Yes clicked');
+      
         this.newgrouplocks.addLockgroup(this.lockId,this.id);
       }
     });
-
-
   }    
+
+
+  async delay(ms: number) {
+    await new Promise(resolve => setTimeout(()=>resolve(), ms)).then(()=>console.log("fired"));
+}
+
 
 
 
   lockSelected(lockname:string){
-    console.log(lockname);
-
+    this.lockname=lockname;
     this.addLockToGroup();
-    console.log(this.candado);
-    if(!this.candado['grupo']){ this.confirmDialog('Desea agregar este candado al grupo?');}
-    else{
-     if(this.candado['grupo']!=this.groupname){
-      this.confirmDialog ('Este candado está asociado a otro grupo, desea añadirlo a este?');
-      }
-      else{
-        this.confirmDialog('Desea agregar este candado al grupo?');
-      }
-    }
-       
+    this.delay(1000).then(any=>{
+      //your task after delay.
+      if(this.grupo==""){ 
+        this.confirmDialog('Desea agregar el candado '+ lockname + ' al grupo?');       
+              }
+              else{
+                if(this.grupo!=this.id){
+                  this.confirmDialog ('El candado '+ lockname + ' está asociado a otro grupo, desea añadirlo a este?');
+                  
+                }
+                else{
+                  this.confirmDialog('Desea agregar el candado '+ lockname + ' al grupo?');
+             
+              }}   
+     
+     });
+    
+   
+    
+    console.log(lockname);
+    this.lockname='';
+   
+ 
+    
   }
 
 }
