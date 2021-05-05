@@ -36,6 +36,10 @@ import {MatDialogModule} from "@angular/material";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { NuevoCandadoGrupoComponent } from './nuevo-candado-grupo/nuevo-candado-grupo.component';
+import { AdminGrupoComponent } from './admin-grupo/admin-grupo.component';
+import { MessageDialogComponent, MessageDialogModel } from './message-dialog/message-dialog.component';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+
 
 
 
@@ -53,13 +57,16 @@ import { NuevoCandadoGrupoComponent } from './nuevo-candado-grupo/nuevo-candado-
     ListaGruposComponent,
     GrupoCandadosComponent,
     ConfirmDialogComponent,
-    NuevoCandadoGrupoComponent  
+    NuevoCandadoGrupoComponent,
+    AdminGrupoComponent,
+    MessageDialogComponent  
   ],
   exports: [
     AdminCandadoComponent,
     TablaCandadosInfoComponent
   ],
   imports: [
+    MatSlideToggleModule,
     BrowserModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
@@ -78,7 +85,7 @@ import { NuevoCandadoGrupoComponent } from './nuevo-candado-grupo/nuevo-candado-
     HttpClientModule
   ],
   entryComponents: [
-    ConfirmDialogComponent
+    ConfirmDialogComponent, MessageDialogComponent
   ],
   providers: [AuthServiceService, UserserviceService, UserResolver, AuthguardService,CandadoServiceService],
   bootstrap: [AppComponent]

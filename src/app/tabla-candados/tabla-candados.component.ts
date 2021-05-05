@@ -27,7 +27,7 @@ export class TablaCandadosComponent implements OnInit, AfterViewInit { // se agr
   previous: any = [];
   searchText: string = '';
   previous2: any = [];
-  searchDate:Date;
+  searchDate:string;
   searchDateInit:Date;
   //searchDateGTM: Date;
   fileName= 'ExcelSheet.xlsx';

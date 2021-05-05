@@ -1,0 +1,103 @@
+@font-face {
+	font-family: 'Lato';
+	font-style: normal;
+	font-weight: 400;
+	src: local('Lato Regular'), local('Lato-Regular'), url(http://themes.googleusercontent.com/static/fonts/lato/v7/qIIYRU-oROkIk8vfvxw6QvesZW2xOQ-xsNqO47m55DA.woff) format('woff');
+  }
+table, th, td {
+    border: 1px solid black;
+    align-items: center;
+  }
+  th {
+    border: 1px solid black;
+    padding-top: 24px;
+    padding-bottom: 24px;
+    text-align: center;
+    background-color: #e20613;
+    font-family: 'Lato';
+    color: black;
+  }
+  
+  img{
+    height: auto;
+    background-image: url("cadena.png");
+  }
+  
+#logo {
+	text-align: left;
+	
+}
+#logotipo {background-color: brown}
+
+p{
+  margin-left: 80px;
+}
+a{
+  margin-right: 10px;
+}
+
+/* Dropdown Button */
+.dropbtn {
+  background-color: #3498DB;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+/* Dropdown button on hover & focus */
+.dropbtn:hover, .dropbtn:focus {
+  background-color: #2980B9;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #ddd}
+
+/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+.show {display:block;}
+
+
+ 
+  .wrap button {
+	  width: 80%;
+	  border-radius: 7px;
+	  background:#e20613;
+	  font-weight: bold;
+	  text-decoration: center;
+	  border-style: solid;
+	  color: white;
+	  margin-top:5px;
+	  margin-left: 40%;
+	  padding-top: 14px;
+	  padding-bottom: 14px;
+	  outline: none;
+	  font-size: 17px;	
+	  font-family: Arial, Helvetica, sans-serif;
+	  cursor: pointer;
+  }
+  

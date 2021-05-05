@@ -5,8 +5,8 @@
 <br>
 <a href="/user" class="btn btn-outline-danger btn-block; home" ng-click="active='home'" style="margin-left: 100px; margin-top: -15px; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-family: 16px;"><b>Inicio</b></a>
 <div class='box'>
-  <h1 style="text-align: center; color: dimgray; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif"><b>Agregar candado a grupo {{groupname}}</b>
-    <a href="/grupos/{{groupname}}" class="btn btn-outline-danger btn-block; home"  style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 16px;"><b style="color: firebrick;" >← Volver al grupo</b></a>  
+  <h1 style="text-align: center; color: dimgray; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif"><b>Agregar {{message}} a grupo {{groupname}}</b>
+    <a href="/{{groupType}}/{{groupname}}" class="btn btn-outline-danger btn-block; home"  style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 16px;"><b style="color: firebrick;" >← Volver al grupo</b></a>  
   </h1>
 </div>
 <div class="container">
@@ -18,17 +18,15 @@
             </p>  -->
  
             <p>
-              <label for="search" style="color: dimgray; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 18px;"><b>Selecciona el candado que quieres agregar al grupo:</b></label><br>
+              <label for="search" style="color: dimgray; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 18px;"><b>Selecciona el {{message}} que quieres agregar al grupo:</b></label><br>
               <select name="miselect"  [(ngModel)]="lockname"  >
-                <option [value]="item" *ngFor="let item of locksselect">{{item}}</option>
+                <option [value]="item" *ngFor="let item of itemsselect">{{item}}</option>
               </select>
             </p>
            
             <p>
                 <a (click)="lockSelected(lockname)" class="btn btn-outline-danger btn-block; home"  style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 16px;"><b style="color: firebrick;" >Agregar</b></a>
-                <a href="/grupos/{{groupname}}"  class="btn btn-outline-danger btn-block; home"  style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 16px;"><b style="color: firebrick;" >Cancelar</b></a> 
-    
-   
+                <a href="/{{group_Id}}/{{groupname}}"  class="btn btn-outline-danger btn-block; home"  style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 16px;"><b style="color: firebrick;" >Cancelar</b></a> 
             </p>
           </div>
         </div>

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {AngularFirestore} from '@angular/fire/firestore';
+import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -10,34 +10,97 @@ export class GrupoServiceService {
       private db: AngularFirestore
   ) { }
 
-  getGroupAll(){
-      return this.db.collection('grupos').snapshotChanges();
+  getGroupAllbyType(type:string){
+      return this.db.collection('grupos',ref => ref .where ('tipo','==',type)).snapshotChanges();
   }
 
   getGroupId(name:string){
       return this.db.collection('grupos',ref => ref .where ('nombre','==',name)).snapshotChanges();
 
   }
+////
 
-  getLockbyGroups(grupo:any){
-    return this.db.collection("candado", ref => ref .where('grupo', "==", grupo)).snapshotChanges();
+  getResultsbyGroups(type:string,grupo:any){
+    if(type=='candados')
+      return this.db.collection("candado", ref => ref .where('grupo', "==", grupo)).snapshotChanges();
+    if(type=='usuarios')
+      return this.db.collection("usuario", ref => ref .where('grupo', "==", grupo)).snapshotChanges();  
+  }
+ 
+  updateResultgroup(type:string,id:string){
+    if(type=='candados')
+      this.db.collection("candado").doc(id).update({grupo: " " });
+    if(type=='usuarios')
+      this.db.collection("usuario").doc(id).update({grupo: " " });
   }
 
-  getLockbyName(name:any){
+
+  getResultsbyName(type:string,name:any){
+    if(type=='candados')
     return this.db.collection("candado", ref => ref .where('nombreCandado', "==", name)).snapshotChanges();
+    if(type=='usuarios')
+    return this.db.collection("usuario", ref => ref .where('nombre', "==", name)).snapshotChanges();
+  
+  }
+///  
+  addcomponenttogroup(collection:string,id:string,group:string){
+   return this.db.collection(collection).doc(id).update({grupo: group });
+  
   }
   
-  updateLockgroup(id:string){
-    this.db.collection("candado").doc(id).update({grupo: '' });
-    return false ;
+  getIdcomponent(type:string,name:string){
+    if(type=='candados')
+      return this.db.collection("candado", ref => ref .where('nombreCandado', "==", name)).snapshotChanges();
+    if(type=='usuarios')
+      return this.db.collection("usuario", ref => ref .where('nombre', "==", name)).snapshotChanges();
+   
   }
+
+  updateGroups(id:string,data:any){
+   return this.db.collection("grupos").doc(id).update(data);
+  }
+
+  createGroups(data){
+
+    return new Promise<any>((resolve, reject) =>{
+      this.db
+          .collection("grupos")
+          .add(data)
+          .then(res => {}, err => reject(err));
+    });   
+  }
+
+  deleteGroups(id:string){
+    this.db.collection("grupos").doc(id).delete();
+  }
+
+getItemsList(type:string){
+
+  if(type=='candados')
+    return this.db.collection("candado", ref => ref .orderBy('nombreCandado', "asc")).snapshotChanges();
+  if(type=='usuarios')
+    return this.db.collection("usuario", ref => ref .orderBy('nombre', "asc")).snapshotChanges();
   
-  addLockgroup(id:string,group:string){
-    this.db.collection("candado").doc(id).update({grupo: group });
-    return false;
+}
+
+updatepermission(id:string, permission:boolean){
+  this.db.collection("candado").doc(id).update({permiso: permission });
   }
-  
-  getIdLock(name:any){
-    return this.db.collection("candado", ref => ref .where('nombreCandado', "==", name)).snapshotChanges();
-  }
+
+getlockbyIMEI_1(imei:string){
+ return this.db.collection("candado", ref => ref .where('IMEI_1','==',imei)).snapshotChanges();
+}
+
+getlockbyIMEI_2(imei:string){
+  return this.db.collection("candado", ref => ref .where('IMEI_2','==',imei)).snapshotChanges();
+ }
+
+ getlockbyIMEI_3(imei:string){
+  return this.db.collection("candado", ref => ref .where('IMEI_3','==',imei)).snapshotChanges();
+ }
+
+ getinformationgroup(namegroup:string,type:string){
+  return this.db.collection("grupos", ref => ref .where('nombre', "==", namegroup).where('tipo',"==",type)).snapshotChanges();
+ }
+ 
 }

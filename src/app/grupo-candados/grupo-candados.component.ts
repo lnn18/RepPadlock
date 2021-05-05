@@ -1,10 +1,12 @@
-import { Component, OnInit , ViewChild} from '@angular/core';
+import { Component, OnInit , ViewChild, AfterViewInit} from '@angular/core';
 import { ActivatedRoute,  Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import {GrupoServiceService} from '../grupo-service.service';
 import { MdbTablePaginationComponent, MdbTableDirective} from 'angular-bootstrap-md';
 import { ConfirmDialogComponent, ConfirmDialogModel } from '../confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+
+
 
 
 
@@ -20,19 +22,25 @@ export class GrupoCandadosComponent implements OnInit {
  
   private routeSub: Subscription;
   private groupname:string='';
-  private gruoplock:any[]=[];
+  private groupType:string='';
   private id:string='';
-  private locks:any[]=[];
-  private result: string = '';
-  private lockbyname:any[]=[];
+  private resultdb:any[]=[];
+  private groupdata:any[]=[];
   private name:string='';
+  private resultname:any[]=[];
+  private type:string='';
+  private newcomponent:string='';
+  private checked:boolean;
+  private message:string='';
+  private idResult:any[]=[];
+  permission:boolean=true;
+  activegroup:boolean=true;
 
 
   constructor(
     
     private grouplocks: GrupoServiceService,
     private dialog: MatDialog,
-    private router: Router,
     private route: ActivatedRoute
     ) {
   }
@@ -40,50 +48,92 @@ export class GrupoCandadosComponent implements OnInit {
   ngOnInit() {
     this.routeSub = this.route.params.subscribe(params => {   
       this.groupname=params['gruposId'];
+      this.groupType=params['id'];
     });
 
-    this.getGroupId();
+    this.getGroupbyType();
   }
 
-  ngOnDestroy() {
-    this.routeSub.unsubscribe();
-  }
+
+
+  getGroupbyType(){
+    switch(this.groupType) { 
+      case 'gruposCandado': { 
+         this.type='candados';
+         this.newcomponent='nuevocandado';
+         this.message='candado'; 
+         break; 
+      } 
+      case 'gruposUsuarios': { 
+         this.type='usuarios';
+         this.newcomponent='nuevousuario';
+         this.message='usuario'; 
+         break; 
+      } 
+      default: { 
+         //statements; 
+         break; 
+      } 
+   }
+   this.getGroupId();
+ }
+
 
   private getGroupId =()=>this.grouplocks.getGroupId(this.groupname).subscribe(response =>{
     this.id='';
     for( let order of response)
          this.id=order.payload.doc.id;
-    this.getLock();
-    console.log("getGruopId");
-  });
-
-  private getLock=()=>this.grouplocks.getLockbyGroups(this.id).subscribe(response =>{
-    this.locks=[];
-    for (let order of response)
-      this.locks.push(order.payload.doc.data());
-     
-    this.mdbTable.setDataSource(this.locks);//nuevo
-    this.locks= this.mdbTable.getDataSource(); 
-
-    console.log(this.locks);
-    console.log("getLock");
-  });
-
-  private getLockbyName=()=>this.grouplocks.getLockbyName(this.name).subscribe(response=>{
-    this.id='';
     for( let order of response)
-        this.id=order.payload.doc.id;
-        console.log('----->'+this.id);
-        this.grouplocks.updateLockgroup(this.id);
-        console.log("getLockbyName");
+         this.groupdata.push(order.payload.doc.data());
+
+    this.activegroup=!this.groupdata[0].activo;     
+    this.getResults();
   });
 
 
-  onclick(lockname:string):void{
 
-    const message = 'Desea eliminar este candado?';
-    const dialogData = new ConfirmDialogModel("Eliminando candado", message);
-    console.log("button pressed");
+  private getResults=()=>this.grouplocks.getResultsbyGroups(this.type,this.id).subscribe(response =>{
+    this.resultdb=[];
+    this.resultname=[];
+    for (let order of response)
+      this.resultdb.push(order.payload.doc.data());
+
+    const rename = (({nombreCandado: nombre, ...rest}) => ({nombre, ...rest}))
+        
+    for(let i=0;i<this.resultdb.length;i++){   
+      if(this.type=='candados'){
+        //Object.assign(this.resultname.nombre,this.resultdb[i].nombreCandado);
+        this.resultname.push(rename(this.resultdb[i]));
+       // console.log(this.resultname[i]);
+   
+      }
+      if(this.type=='usuarios'){
+        this.resultname.push(this.resultdb[i]);
+      }
+    }
+    this.mdbTable.setDataSource(this.resultname);//nuevo
+    this.resultname= this.mdbTable.getDataSource(); 
+
+   
+
+  });
+
+  private getResultsbyName_2=()=>this.grouplocks.getIdcomponent(this.type, this.name).subscribe(response=>{
+    this.id='';
+    for( let order of response){
+        this.id=order.payload.doc.id;
+    }
+    console.log(this.id);
+    this.grouplocks.updateResultgroup(this.type,this.id);
+       
+  });
+
+
+  onclick(lockname):void{
+
+   
+    const message = 'Desea eliminar este '+this.message+"?";
+    const dialogData = new ConfirmDialogModel("Eliminando "+this.message, message);
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       maxWidth: "400px",
       data: dialogData
@@ -91,17 +141,65 @@ export class GrupoCandadosComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if(result) {
-        console.log('Yes clicked');
-        this.name=lockname;
-        this.getLockbyName();     
+        this.name=lockname.nombre;
+        this.getResultsbyName_2();     
       }
     });
 
 
   }
 
-// private gotoaddnewlock(name:string){
-//     this.router.navigate(["/grupos/nuevocandado",name]);
-//   }
+  async delay(ms: number) {
+    await new Promise(resolve => setTimeout(()=>resolve(), ms)).then(()=>console.log("fired"));
+  }
+
+
+  changeStatus(isChecked,object){
+    
+   
+    console.log(object.nombre);
+
+    if(this.type=='candados'){
+          this.grouplocks.getIdcomponent(this.type,object.nombre).subscribe(response=>{
+            this.idResult=[];
+            for( let order of response){
+                  this.idResult.push(order.payload.doc.id);}
+                  console.log(this.idResult);
+                  
+          });
+            
+   }
+
+   if(this.type=='usuarios'){
+    this.grouplocks.getlockbyIMEI_1(object.IMEI).subscribe(response=>{
+      this.idResult=[];
+      for( let order of response)
+            this.idResult.push(order.payload.doc.id);
+            console.log(this.idResult);
+            
+    });
+    this.grouplocks.getlockbyIMEI_2(object.IMEI).subscribe(response=>{
+      for( let order of response)
+            this.idResult.push(order.payload.doc.id);
+            console.log(this.idResult);
+            
+    });
+    this.grouplocks.getlockbyIMEI_3(object.IMEI).subscribe(response=>{
+      for( let order of response)
+            this.idResult.push(order.payload.doc.id);
+            console.log(this.idResult);
+            
+    }); 
+  }
+
+    this.delay(1000).then(any=>{
+     for(let k=0;k<this.idResult.length;k++)
+       this.grouplocks.updatepermission(this.idResult[k],isChecked.checked);});      
+
+    
+    
+    
+  }
+
 
 }

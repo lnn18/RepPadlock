@@ -19,6 +19,9 @@ export class UserComponentComponent implements OnInit {
   user: FirebaseUserModel = new FirebaseUserModel();
   profileForm: FormGroup;
 
+  gruposCandado:string="gruposCandado";
+  gruposUsuario:string="gruposUsuarios";
+
   constructor(
     public userService: UserserviceService,
     public authService: AuthServiceService,

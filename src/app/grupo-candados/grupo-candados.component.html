@@ -4,53 +4,39 @@
 <br>
 <br>
 <a href="/user" class="btn btn-outline-danger btn-block; home" ng-click="active='home'" style="margin-left: 100px; margin-top: -15px; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-family: 16px;"><b>Inicio</b></a>
-<a href="/grupos/" class="btn btn-outline-danger btn-block; home" ng-click="active='home'" style="margin-left: 100px; margin-top: -15px; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-family: 16px;"><b>Volver</b></a>  
-
+<a href="/{{groupType}}" class="btn btn-outline-danger btn-block; home" ng-click="active=''" style="margin-left: 100px; margin-top: -15px; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-family: 16px;"><b>Volver</b></a>  
+ 
 <div class='box'>
   <h1 style="text-align: center; color: dimgray; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif"><b>Grupo {{groupname}}</b>
-    <a  href="/grupos/nuevocandado/{{groupname}}" class="btn btn-outline-danger btn-block; home" style="margin-left: 100px; margin-top: -15px; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-family: 16px;"><b>+ Agregar candado</b></a>
+    <a  href="/{{groupType}}/{{groupname}}/{{newcomponent}}" class="btn btn-outline-danger btn-block; home" style="margin-left: 100px; margin-top: -15px; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-family: 16px;"><b>+ Agregar {{type}}</b></a>
   </h1>
 </div>
 <div class="container">
-    <div class="row">
-        <div class="col-md-12 mx-auto">
-          <div class="md-form">                    
-            <!-- <p>
-            <input type="text" [(ngModel)]="searchText" id="search" mdbInput (ngModelChange)="searchItems($event)" style="border-radius: 5px; margin-top: -10px;">
-            </p>  -->
-<!-- 
-            <p>
-              <label for="search" style="color: dimgray; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 18px;"><b>Filtrar Por :</b></label><br>
-              <select name="miselect" [(ngModel)]="selectGroup" mdbInput  (ngModelChange)="SelectGroup($event)" >
-                <option [value]="item" *ngFor="let item of selectobject">{{item}}</option>
-              </select>
-
-            </p> -->
-          </div>
-        </div>
-    </div>  
     <br>
-     <table mdbTable #tableEl="mdbTable" class="table">
+    <table mdbTable #tableEl="mdbTable" class="table">
       <thead>
       <tr>
         <th style="font-size: 16px; color: floralwhite; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;"><b>Nombre</b></th>
-        <th style="font-size: 16px; color: floralwhite; font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;"><b>Bateria</b></th>
+        <th style="font-size: 16px; color: floralwhite; font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;"><b>Permiso</b></th>  
         <th style="font-size: 16px; color: floralwhite; font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;"><b>Eliminar</b></th>  
       </tr>
       </thead>
+      
+      
       <tbody>
-      <tr *ngFor="let order of locks; let i = index">
-            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{order.nombreCandado}}</td>
-            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{order.bateria}}</td>
-            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"><a (click)="onclick(order.nombreCandado)" class="btn btn-outline-danger btn-block; home"  style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 16px;"><b style="color: firebrick;" >Eliminar</b></a></td>
+      <tr *ngFor="let order of resultname; let i = index">
+            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{order.nombre}}</td>
+            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"><mat-slide-toggle [(ngModel)]="order.permiso" (change)="changeStatus($event,order)" disabled="{{activegroup}}"></mat-slide-toggle></td>   
+            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"><a (click)="onclick(order)" class="btn btn-outline-danger btn-block; home"  style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 16px;"><b style="color: firebrick;" >Eliminar</b></a></td>
       </tr>
       </tbody>
+      
       <tfoot class="grey lighten-5 w-100">
       <tr >
-        <td colspan="8"  >
-          <mdb-table-pagination [tableEl]="tableEl" [searchDataSource]="locks"></mdb-table-pagination >
-        </td>
+         <td colspan="8"  >
+          <mdb-table-pagination [tableEl]="tableEl" [searchDataSource]="resultname"></mdb-table-pagination >
+        </td> 
       </tr>
       </tfoot>
     </table> 
-  </div>
+</div> 

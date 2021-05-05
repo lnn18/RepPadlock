@@ -5,6 +5,7 @@ import {GrupoServiceService} from '../grupo-service.service';
 import {CandadoServiceService} from '../candado-service.service';
 import { ConfirmDialogComponent, ConfirmDialogModel } from '../confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import {MessageDialogModel,MessageDialogComponent} from '../message-dialog/message-dialog.component';
 
 
 
@@ -18,61 +19,94 @@ export class NuevoCandadoGrupoComponent implements OnInit {
   id:string='';
   routeSub: Subscription;
   groupname:string='';
-  locks:any[]=[];
-  locksselect:string[];
+  items:any[]=[];
+  itemsselect:string[];
   locksId:string[];
-  lockname:string='';
-  lockId:string='';
+  itemname:string='';
+  itemId:string='';
   candado:any[]=[];
   counter=0;
   grupo:string='';
- 
+  groupType:string='';
+  type:string='';
+  message:string='';
   
 
   constructor(
-    
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private locksservice: CandadoServiceService,
-    private newgrouplocks: GrupoServiceService
+    private newgroupcomponents: GrupoServiceService
   ) { }
 
   ngOnInit() {
     this.routeSub = this.route.params.subscribe(params => {   
       this.groupname=params['gruposId'];
+      this.groupType=params['id'];
     });
-
+    this.getGroupbyType();
     this.getGroupId();
     this.getLocks();
+    console.log("Waiting tasks");
+    this.delay(20000).then(any=>{
+      console.log("Test async task");
+
+    });
   }
 
-  private getGroupId =()=>this.newgrouplocks.getGroupId(this.groupname).subscribe(response =>{
+
+  getGroupbyType(){
+    switch(this.groupType) { 
+      case 'gruposCandado': { 
+         this.type='candados';
+         this.message='candado'; 
+         break; 
+      } 
+      case 'gruposUsuarios': { 
+         this.type='usuarios';
+         this.message='usuario';
+         break; 
+      } 
+      default: { 
+         //statements; 
+         break; 
+      } 
+   } 
+  }
+
+  private getGroupId =()=>this.newgroupcomponents.getGroupId(this.groupname).subscribe(response =>{
         this.id='';
     for( let order of response)
          this.id=order.payload.doc.id;
+
+         console.log(this.id);
     
   });
 
-  private getLocks =()=>this.locksservice.getInfoCandado().subscribe(response =>{
-      this.locksselect=[];
-      this.locks=[];
+  private getLocks =()=>this.newgroupcomponents.getItemsList(this.type).subscribe(response =>{
+      this.itemsselect=[];
+      this.items=[];
       for( let order of response)
-         this.locks.push(order.payload.doc.data());
+         this.items.push(order.payload.doc.data());
     
-      for (let i=0;i<this.locks.length;i++){
-        if(this.locks[i].grupo!=this.id){
-          this.locksselect[i-this.counter]=this.locks[i].nombreCandado;
+      for (let i=0;i<this.items.length;i++){
+        if(this.items[i].grupo!=this.id){
+          if(this.type=='candados'){
+          this.itemsselect[i-this.counter]=this.items[i].nombreCandado;}
+          if(this.type=='usuarios'){
+            this.itemsselect[i-this.counter]=this.items[i].nombre;}
+            
         }
         else{this.counter++;}
       }
 
   });
 
- addLockToGroup=()=>this.newgrouplocks.getIdLock(this.lockname).subscribe(response=>{
-       this.lockId='';
+ addLockToGroup=()=>this.newgroupcomponents.getIdcomponent(this.type,this.itemname).subscribe(response=>{
+       this.itemId='';
        this.candado=[];
     for( let order of response){
-        this.lockId=order.payload.doc.id;}
+        this.itemId=order.payload.doc.id;}
 
     for( let order of response){
         this.candado.push(order.payload.doc.data());}
@@ -85,7 +119,7 @@ export class NuevoCandadoGrupoComponent implements OnInit {
 
 
   confirmDialog(message:string){
-    const dialogData = new ConfirmDialogModel("Agregando candado", message);
+    const dialogData = new ConfirmDialogModel("Agregando "+this.message, message);
     console.log("button pressed");
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       maxWidth: "400px",
@@ -95,7 +129,24 @@ export class NuevoCandadoGrupoComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if(result) {
       
-        this.newgrouplocks.addLockgroup(this.lockId,this.id);
+        this.newgroupcomponents.addcomponenttogroup(this.message,this.itemId,this.id);
+              
+        const dialogData = new MessageDialogModel("","El "+this.message+" fue agregado al grupo");
+        console.log("button pressed");
+        const dialogRef = this.dialog.open(MessageDialogComponent, {
+          maxWidth: "400px",
+          data: dialogData
+        });
+     
+        dialogRef.afterClosed().subscribe(result => {
+          if(result) {
+           
+          }
+        });
+        
+      
+      
+      
       }
     });
   }    
@@ -108,33 +159,26 @@ export class NuevoCandadoGrupoComponent implements OnInit {
 
 
 
-  lockSelected(lockname:string){
-    this.lockname=lockname;
+  lockSelected(additem:string){
+    this.itemname=additem;
     this.addLockToGroup();
     this.delay(1000).then(any=>{
       //your task after delay.
       if(this.grupo==""){ 
-        this.confirmDialog('Desea agregar el candado '+ lockname + ' al grupo?');       
+        this.confirmDialog('Desea agregar el '+this.message+' '+ additem + ' al grupo?');       
               }
               else{
                 if(this.grupo!=this.id){
-                  this.confirmDialog ('El candado '+ lockname + ' está asociado a otro grupo, desea añadirlo a este?');
+                  this.confirmDialog ('El '+this.message+' '+ additem + ' está asociado a otro grupo, desea añadirlo a este?');
                   
                 }
                 else{
-                  this.confirmDialog('Desea agregar el candado '+ lockname + ' al grupo?');
+                  this.confirmDialog('Desea agregar el '+this.message+' '+ additem + ' al grupo?');
              
               }}   
      
      });
-    
-   
-    
-    console.log(lockname);
-    this.lockname='';
-   
- 
-    
+    this.itemname='';
   }
 
 }
