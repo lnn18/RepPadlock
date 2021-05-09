@@ -1,7 +1,7 @@
 import { Component, OnInit , ViewChild, AfterViewInit} from '@angular/core';
-import { ActivatedRoute,  Params, Router } from '@angular/router';
+import { ActivatedRoute} from '@angular/router';
 import { Subscription } from 'rxjs';
-import {GrupoServiceService} from '../grupo-service.service';
+import { GrupoServiceService} from '../grupo-service.service';
 import { MdbTablePaginationComponent, MdbTableDirective} from 'angular-bootstrap-md';
 import { ConfirmDialogComponent, ConfirmDialogModel } from '../confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -31,10 +31,13 @@ export class GrupoCandadosComponent implements OnInit {
   private type:string='';
   private newcomponent:string='';
   private checked:boolean;
+  private user:any[]=[];
+  enableall:boolean;
   private message:string='';
   private idResult:any[]=[];
   permission:boolean=true;
   activegroup:boolean=true;
+  iswaiting:boolean;
 
 
   constructor(
@@ -123,15 +126,13 @@ export class GrupoCandadosComponent implements OnInit {
     for( let order of response){
         this.id=order.payload.doc.id;
     }
-    console.log(this.id);
+    //console.log(this.id);
     this.grouplocks.updateResultgroup(this.type,this.id);
        
   });
 
 
   onclick(lockname):void{
-
-   
     const message = 'Desea eliminar este '+this.message+"?";
     const dialogData = new ConfirmDialogModel("Eliminando "+this.message, message);
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
@@ -149,57 +150,87 @@ export class GrupoCandadosComponent implements OnInit {
 
   }
 
+  
+
   async delay(ms: number) {
-    await new Promise(resolve => setTimeout(()=>resolve(), ms)).then(()=>console.log("fired"));
+    await new Promise(resolve => setTimeout(()=>resolve(0), ms)).then(()=>this.iswaiting=true);
   }
 
 
-  changeStatus(isChecked,object){
+  
+  getstatus(isChecked){
     
-   
-    console.log(object.nombre);
+    this.enableall=isChecked.checked;
+
+    if(this.type=="candados"){
+    this.grouplocks.getResultsbyGroups(this.type,this.id).subscribe(response=>{
+      this.idResult=[];
+      for( let order of response){
+            this.idResult.push(order.payload.doc.id);}
+            
+       });
+      }
+
+      if(this.type=="usuarios"){
+        for(let i=0;i<this.resultname.length;i++){
+          this.getidbyImei(this.resultname[i]);
+        }
+      }
+
+      this.updatePermission(this.enableall);
+    
+  }
+
+  changeStatus(isChecked,object){
+    //console.log(object.nombre);
 
     if(this.type=='candados'){
+    
           this.grouplocks.getIdcomponent(this.type,object.nombre).subscribe(response=>{
             this.idResult=[];
             for( let order of response){
                   this.idResult.push(order.payload.doc.id);}
-                  console.log(this.idResult);
-                  
+                  //console.log("----->"+this.idResult);          
           });
-            
-   }
+        
+    }
+   this.getidbyImei(object);
+   this.updatePermission(isChecked.checked);
+  }
 
+  getidbyImei(object){
+
+   this.idResult=[];
    if(this.type=='usuarios'){
     this.grouplocks.getlockbyIMEI_1(object.IMEI).subscribe(response=>{
-      this.idResult=[];
+     
       for( let order of response)
             this.idResult.push(order.payload.doc.id);
-            console.log(this.idResult);
             
     });
     this.grouplocks.getlockbyIMEI_2(object.IMEI).subscribe(response=>{
       for( let order of response)
             this.idResult.push(order.payload.doc.id);
-            console.log(this.idResult);
             
     });
     this.grouplocks.getlockbyIMEI_3(object.IMEI).subscribe(response=>{
       for( let order of response)
             this.idResult.push(order.payload.doc.id);
-            console.log(this.idResult);
             
     }); 
   }
-
-    this.delay(1000).then(any=>{
-     for(let k=0;k<this.idResult.length;k++)
-       this.grouplocks.updatepermission(this.idResult[k],isChecked.checked);});      
+}
 
     
-    
-    
-  }
 
+    updatePermission(enable:boolean){
+
+      this.delay(500).then(any=>{
+        for(let k=0;k<this.idResult.length;k++)
+          this.grouplocks.updatepermission(this.idResult[k],enable);
+         });      
+       }
+
+    
 
 }

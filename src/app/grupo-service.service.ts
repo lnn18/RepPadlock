@@ -56,6 +56,14 @@ export class GrupoServiceService {
    
   }
 
+  getIdcomponentbyGroup(type:string,name:string){
+    if(type=='candados')
+      return this.db.collection("candado", ref => ref .where('nombreCandado', "==", name)).snapshotChanges();
+    if(type=='usuarios')
+      return this.db.collection("usuario", ref => ref .where('nombre', "==", name)).snapshotChanges();
+   
+  }
+
   updateGroups(id:string,data:any){
    return this.db.collection("grupos").doc(id).update(data);
   }
@@ -98,6 +106,7 @@ getlockbyIMEI_2(imei:string){
  getlockbyIMEI_3(imei:string){
   return this.db.collection("candado", ref => ref .where('IMEI_3','==',imei)).snapshotChanges();
  }
+
 
  getinformationgroup(namegroup:string,type:string){
   return this.db.collection("grupos", ref => ref .where('nombre', "==", namegroup).where('tipo',"==",type)).snapshotChanges();

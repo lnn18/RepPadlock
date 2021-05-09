@@ -5,7 +5,7 @@
 <br>
 <a href="/user" class="btn btn-outline-danger btn-block; home" ng-click="active='home'" style="margin-left: 100px; margin-top: -15px; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-family: 16px;"><b>Inicio</b></a>
 <a href="/{{groupType}}" class="btn btn-outline-danger btn-block; home" ng-click="active=''" style="margin-left: 100px; margin-top: -15px; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-family: 16px;"><b>Volver</b></a>  
- 
+ <mat-slide-toggle (change)="getstatus($event)"  disabled="{{activegroup}}" style="margin-left: 600px" >Permiso del grupo</mat-slide-toggle>
 <div class='box'>
   <h1 style="text-align: center; color: dimgray; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif"><b>Grupo {{groupname}}</b>
     <a  href="/{{groupType}}/{{groupname}}/{{newcomponent}}" class="btn btn-outline-danger btn-block; home" style="margin-left: 100px; margin-top: -15px; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-family: 16px;"><b>+ Agregar {{type}}</b></a>
@@ -26,7 +26,7 @@
       <tbody>
       <tr *ngFor="let order of resultname; let i = index">
             <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{order.nombre}}</td>
-            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"><mat-slide-toggle [(ngModel)]="order.permiso" (change)="changeStatus($event,order)" disabled="{{activegroup}}"></mat-slide-toggle></td>   
+            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"><mat-slide-toggle [(ngModel)]="order.permiso" (change)="changeStatus($event,order)" checked="{{enableall}}" disabled="{{activegroup}}"></mat-slide-toggle></td>   
             <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"><a (click)="onclick(order)" class="btn btn-outline-danger btn-block; home"  style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 16px;"><b style="color: firebrick;" >Eliminar</b></a></td>
       </tr>
       </tbody>
