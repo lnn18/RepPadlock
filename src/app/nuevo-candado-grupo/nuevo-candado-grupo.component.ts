@@ -30,6 +30,7 @@ export class NuevoCandadoGrupoComponent implements OnInit {
   groupType:string='';
   type:string='';
   message:string='';
+  groupdata:any[]=[];
   
 
   constructor(
@@ -49,7 +50,6 @@ export class NuevoCandadoGrupoComponent implements OnInit {
     this.getLocks();
     console.log("Waiting tasks");
     this.delay(20000).then(any=>{
-      console.log("Test async task");
 
     });
   }
@@ -76,11 +76,12 @@ export class NuevoCandadoGrupoComponent implements OnInit {
 
   private getGroupId =()=>this.newgroupcomponents.getGroupId(this.groupname).subscribe(response =>{
         this.id='';
-    for( let order of response)
+        this.groupdata=[];
+    for( let order of response){
          this.id=order.payload.doc.id;
+         this.groupdata.push(order.payload.doc.data()); 
+        }
 
-         console.log(this.id);
-    
   });
 
   private getLocks =()=>this.newgroupcomponents.getItemsList(this.type).subscribe(response =>{
@@ -111,8 +112,6 @@ export class NuevoCandadoGrupoComponent implements OnInit {
     for( let order of response){
         this.candado.push(order.payload.doc.data());}
         this.grupo=this.candado[0].grupo;
-      
-    
         //this.newgrouplocks.addLockgroup(this.lockId,this.id);
       });
 
@@ -120,7 +119,7 @@ export class NuevoCandadoGrupoComponent implements OnInit {
 
   confirmDialog(message:string){
     const dialogData = new ConfirmDialogModel("Agregando "+this.message, message);
-    console.log("button pressed");
+    
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       maxWidth: "400px",
       data: dialogData
@@ -129,10 +128,9 @@ export class NuevoCandadoGrupoComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if(result) {
       
-        this.newgroupcomponents.addcomponenttogroup(this.message,this.itemId,this.id);
-              
+        this.newgroupcomponents.addcomponenttogroup(this.message,this.itemId,this.id,this.type,this.groupdata[0].IMEI);
+
         const dialogData = new MessageDialogModel("","El "+this.message+" fue agregado al grupo");
-        console.log("button pressed");
         const dialogRef = this.dialog.open(MessageDialogComponent, {
           maxWidth: "400px",
           data: dialogData
@@ -143,18 +141,14 @@ export class NuevoCandadoGrupoComponent implements OnInit {
            
           }
         });
-        
-      
-      
-      
       }
     });
   }    
 
 
   async delay(ms: number) {
-    await new Promise(resolve => setTimeout(()=>resolve(), ms)).then(()=>console.log("fired"));
-}
+    await new Promise(resolve => setTimeout(()=>resolve(0), ms)).then(()=>console.log("fired"));
+  }
 
 
 
@@ -162,6 +156,7 @@ export class NuevoCandadoGrupoComponent implements OnInit {
   lockSelected(additem:string){
     this.itemname=additem;
     this.addLockToGroup();
+    
     this.delay(1000).then(any=>{
       //your task after delay.
       if(this.grupo==""){ 

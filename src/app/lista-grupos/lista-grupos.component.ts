@@ -89,7 +89,7 @@ export class ListaGruposComponent implements OnInit, AfterViewInit {
       this.group.getGroupId(groupname).subscribe(response =>{
         for (let order of response)
            this.groupid=order.payload.doc.id;
-           console.log(this.groupid);         
+         //  console.log(this.groupid);         
 
           this.group.deleteGroups(this.groupid);
       });

@@ -16,7 +16,6 @@ export class GrupoServiceService {
 
   getGroupId(name:string){
       return this.db.collection('grupos',ref => ref .where ('nombre','==',name)).snapshotChanges();
-
   }
 ////
 
@@ -43,10 +42,21 @@ export class GrupoServiceService {
   
   }
 ///  
-  addcomponenttogroup(collection:string,id:string,group:string){
-   return this.db.collection(collection).doc(id).update({grupo: group });
-  
-  }
+  addcomponenttogroup(collection:string,id:string,group:string,type:string,IMEI:string){
+    if(type=="usuarios")
+        this.db.collection(collection).doc(id).update({grupo: group,IMEI:group.slice(5,)});
+    if(type=="candados")
+        this.db.collection(collection).doc(id).update({grupo: group,IMEI_1:IMEI});
+   }
+
+  addcomponenttogroupimei(id:string,imei:string){
+        this.db.collection("grupos").doc(id).update({IMEI: imei});    
+   }
+
+   updateIMEILocks(id:string,imei:string){
+    this.db.collection("candado").doc(id).update({IMEI_1: imei });
+   }
+   
   
   getIdcomponent(type:string,name:string){
     if(type=='candados')
@@ -65,12 +75,11 @@ export class GrupoServiceService {
   }
 
   updateGroups(id:string,data:any){
-   return this.db.collection("grupos").doc(id).update(data);
+    this.db.collection("grupos").doc(id).update(data);
   }
 
   createGroups(data){
-
-    return new Promise<any>((resolve, reject) =>{
+      return new Promise<any>((resolve, reject) =>{
       this.db
           .collection("grupos")
           .add(data)
@@ -83,12 +92,15 @@ export class GrupoServiceService {
   }
 
 getItemsList(type:string){
-
   if(type=='candados')
     return this.db.collection("candado", ref => ref .orderBy('nombreCandado', "asc")).snapshotChanges();
   if(type=='usuarios')
     return this.db.collection("usuario", ref => ref .orderBy('nombre', "asc")).snapshotChanges();
   
+}
+
+getGroupsList(){
+  return this.db.collection("grupos", ref => ref .where('tipo','==','usuarios')).snapshotChanges();
 }
 
 updatepermission(id:string, permission:boolean){
@@ -110,6 +122,10 @@ getlockbyIMEI_2(imei:string){
 
  getinformationgroup(namegroup:string,type:string){
   return this.db.collection("grupos", ref => ref .where('nombre', "==", namegroup).where('tipo',"==",type)).snapshotChanges();
+ }
+
+ newLogRecord(inputLog:object){
+  this.db.collection("LogEvent").add(inputLog);
  }
  
 }

@@ -13,20 +13,26 @@
   <br>
   <label style="margin-left: 25px; color: dimgray;" >
     <b style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 22px; margin-left: 20px;" > Nombre: </b>
-    <input type="text" #newname value="{{groupname}}"><br><br></label><br>
+    <input type="text" #newname value="{{groupname}}"></label><br>
   
-  <label style="margin-left: 25px; color: dimgray;" >
-    <b style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 22px; margin-left: 20px;" > Descripción: </b>
-    <input type="text" #newdescription value="{{groupdescription}}"><br><br></label><br>
     <label style="margin-left: 25px; color: dimgray;" >
+    <b style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 22px; margin-left: 20px;" > Descripción: </b>
+    <input type="text" #newdescription value="{{groupdescription}}"></label><br>
+    
+    
+    <label style="margin-left: 25px; color: dimgray;" id="selectlabel" >
+      <b style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 22px; margin-left: 20px;" > Grupo de Usuarios a asociar: </b>
+       <select name="miselect"  [(ngModel)]="namegroup">
+        <option [value]="item" *ngFor="let item of itemsselect">{{item}}</option>
+      </select>
+      </label><br >
+      <label style="margin-left: 25px; color: dimgray;" >
       <b style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 22px; margin-left: 20px;" > Activo: </b>
-     
-    <mat-slide-toggle [formControl]="activevalue" [checked]="active" (change)="onChange()"></mat-slide-toggle>
-  </label>
+      <mat-slide-toggle [formControl]="activevalue" [checked]="active" (change)="onChange()"></mat-slide-toggle></label>
     <br>
     <br>
     <br>
-     <a (click)="creategroup(newname.value, newdescription.value)"  class="btn btn-outline-danger btn-block; home" ng-click="active='home'" style="margin-left: 100px;margin-top: -15px; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 25px;"><b>{{settingsmsg}}</b></a>
+     <a (click)="creategroup(newname.value, newdescription.value, namegroup)"  class="btn btn-outline-danger btn-block; home" style="margin-left: 100px;margin-top: -15px; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 25px;"><b>{{settingsmsg}}</b></a>
      <a href="/{{groupType}}" class="btn btn-outline-danger btn-block; home" ng-click="active='home'" style="margin-left: 100px;margin-top: -15px; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 25px;"><b>Cancelar</b></a>
 
     <br>  

@@ -65,12 +65,8 @@ export class AdminCandadoComponent implements OnInit {
      
   }
 
-  getInformacionCandado = () => this.candado
-      .getOneCandado(this.nombreCand)
-        
-      .subscribe(resp => {
+  getInformacionCandado = () => this.candado.getOneCandado(this.nombreCand).subscribe(resp => {
     this.info = [];
-
     for (let ord of resp){
       this.idCandado.push(ord.payload.doc.id)
       this.info.push(ord.payload.doc.data());
