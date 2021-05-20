@@ -3,7 +3,7 @@
 </div>
 <br>
 <br>
-<a href="/user" class="btn btn-outline-danger btn-block; home" ng-click="active='home'" style="margin-left: 100px; margin-top: -15px; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-family: 16px;"><b>Inicio</b></a>
+<a href="/user" class="btn btn-outline-danger btn-block; home" ng-click="active='home'" style="margin-left: 100px; margin-top: -15px; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-family: 16px;" ><b>Inicio</b></a>
 <div class='box'>
   <h1 style="text-align: center; color: dimgray; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif"><b>Grupos {{type}}</b>
     &nbsp;
@@ -13,7 +13,10 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12 mx-auto">
-          <div class="md-form">                    
+          <div class="md-form">
+            <label for="search" style="color: dimgray; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 18px;"><b>Filtrar por nombre:</b></label><br>
+            <input type="text" [(ngModel)]="searchText" id="search" mdbInput (ngModelChange)="searchItems($event)" style="border-radius: 5px; color: dimgray; margin-top: -10px;">
+                              
             <!-- <p>
             <input type="text" [(ngModel)]="searchText" id="search" mdbInput (ngModelChange)="searchItems($event)" style="border-radius: 5px; margin-top: -10px;">
             </p>  -->
@@ -33,6 +36,7 @@
       <thead>
       <tr>
         <th style="font-size: 16px; color: floralwhite; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;"><b>Nombre</b></th>
+        <th style="font-size: 16px; color: floralwhite; font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;"><b>Descripción</b></th> 
         <th style="font-size: 16px; color: floralwhite; font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;"><b>Ver</b></th> 
         <th style="font-size: 16px; color: floralwhite; font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;"><b>Editar</b></th> 
         <th style="font-size: 16px; color: floralwhite; font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;"><b>Eliminar</b></th> 
@@ -42,9 +46,10 @@
       <tbody>
       <tr *ngFor="let order of groupobject; let i = index">
             <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{order.nombre}}</td>
-            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"><a href="{{groupType}}/{{order.nombre}}" class="btn btn-outline-danger btn-block; home"  style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 16px;"><b style="color: firebrick;" >Ver</b></a></td>
+            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{order.descripcion}}</td>
+            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"><a href="{{groupType}}/{{order.nombre}}" class="btn btn-outline-danger btn-block; home"  style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 16px;"><b style="color: firebrick;"  >Ver</b></a></td>
             <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"><a href="{{groupType}}/configuracion/{{order.nombre}}" class="btn btn-outline-danger btn-block; home"  style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 16px;"><b style="color: firebrick;" >Editar</b></a></td>
-            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"><a (click)="onclick(order.nombre)" class="btn btn-outline-danger btn-block; home"  style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 16px;"><b style="color: firebrick;" >Eliminar</b></a></td>
+            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"><a (click)="onclick(order.nombre)" class="btn btn-outline-danger btn-block; home"  style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 16px;"><b style="color: firebrick;">Eliminar</b></a></td>
     
     
       </tr>

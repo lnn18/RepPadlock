@@ -3,6 +3,8 @@ import {GrupoServiceService} from '../grupo-service.service';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute,  Params, Router } from '@angular/router';
 import { MdbTablePaginationComponent, MdbTableDirective} from 'angular-bootstrap-md';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent, ConfirmDialogModel } from '../confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-lista-grupos',
@@ -21,10 +23,14 @@ export class ListaGruposComponent implements OnInit, AfterViewInit {
   groupType:string='';
   type:string='';
   groupid:string='';
+  msgenable:boolean;
+  buttonenable:boolean; 
+  searchText: string = '';
 
   constructor(
     private cdRef: ChangeDetectorRef,
     private router: Router,
+    private dialog: MatDialog,
     private route: ActivatedRoute,
     private group: GrupoServiceService
   ) { }
@@ -34,6 +40,7 @@ export class ListaGruposComponent implements OnInit, AfterViewInit {
       this.groupType=params['id'];
     });
     this.getGroupbyType();
+    this.buttonenable=false;
   
   }
   ngAfterViewInit(){
@@ -84,17 +91,52 @@ export class ListaGruposComponent implements OnInit, AfterViewInit {
     //this.previous = this.mdbTable.getDataSource();
   });
 
-  onclick(groupname:string){
 
+  messageDialog(groupname:string, groupid:string){
+        
+    const dialogData = new ConfirmDialogModel("Eliminando grupo","¿Seguro desea eliminar el grupo "+groupname+"?");
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      maxWidth: "400px",
+      data: dialogData
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      if(result) {
+        this.group.deleteGroups(groupid);
+        this.msgenable=false;
+
+      }
+    
+    });
+    
+    }
+
+  onclick(groupname:string){
+      let groupid;
+      this.msgenable=true;
       this.group.getGroupId(groupname).subscribe(response =>{
         for (let order of response)
-           this.groupid=order.payload.doc.id;
-         //  console.log(this.groupid);         
-
-          this.group.deleteGroups(this.groupid);
+           groupid=order.payload.doc.id;
+         //  console.log(this.groupid);
+         if(this.msgenable)
+          this.messageDialog(groupname,groupid);  
       });
 
 
+  }
+
+  searchItems(algo) {
+    const prev = this.mdbTable.getDataSource();
+
+    if (!this.searchText) {
+      this.mdbTable.setDataSource(prev);
+      this.groupobject = this.mdbTable.getDataSource();
+    }
+
+    if (this.searchText) {
+      this.groupobject= this.mdbTable.searchLocalDataBy(this.searchText);
+      this.mdbTable.setDataSource(prev);
+    }
   }
 
 }
