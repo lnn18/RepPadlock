@@ -32,11 +32,11 @@ export class NuevoCandadoGrupoComponent implements OnInit {
   message:string='';
   groupdata:any[]=[];
   
+  
 
   constructor(
     private route: ActivatedRoute,
     private dialog: MatDialog,
-    private locksservice: CandadoServiceService,
     private newgroupcomponents: GrupoServiceService
   ) { }
 
@@ -47,7 +47,7 @@ export class NuevoCandadoGrupoComponent implements OnInit {
     });
     this.getGroupbyType();
     this.getGroupId();
-    this.getLocks();
+    this.getElements();
     console.log("Waiting tasks");
     this.delay(20000).then(any=>{
 
@@ -84,7 +84,7 @@ export class NuevoCandadoGrupoComponent implements OnInit {
 
   });
 
-  private getLocks =()=>this.newgroupcomponents.getItemsList(this.type).subscribe(response =>{
+  private getElements =()=>this.newgroupcomponents.getItemsList(this.type).subscribe(response =>{
       this.itemsselect=[];
       this.items=[];
       for( let order of response)
@@ -103,7 +103,7 @@ export class NuevoCandadoGrupoComponent implements OnInit {
 
   });
 
- addLockToGroup=()=>this.newgroupcomponents.getIdcomponent(this.type,this.itemname).subscribe(response=>{
+ addelementToGroup=()=>this.newgroupcomponents.getIdcomponent(this.type,this.itemname).subscribe(response=>{
        this.itemId='';
        this.candado=[];
     for( let order of response){
@@ -138,7 +138,7 @@ export class NuevoCandadoGrupoComponent implements OnInit {
      
         dialogRef.afterClosed().subscribe(result => {
           if(result) {
-           
+    
           }
         });
       }
@@ -153,27 +153,22 @@ export class NuevoCandadoGrupoComponent implements OnInit {
 
 
 
-  lockSelected(additem:string){
-    this.itemname=additem;
-    this.addLockToGroup();
-    
-    this.delay(1000).then(any=>{
-      //your task after delay.
-      if(this.grupo==""){ 
-        this.confirmDialog('Desea agregar el '+this.message+' '+ additem + ' al grupo?');       
+lockSelected(additem:string){
+  this.itemname=additem;
+  this.addelementToGroup();
+  this.delay(1000).then(any=>{
+    //your task after delay.
+    if(this.grupo==" "){ 
+      this.confirmDialog('Desea agregar el '+this.message+' '+ additem + ' al grupo?');       
+            }
+            else{
+              if(this.grupo!=this.id){
+                this.confirmDialog ('El '+this.message+' '+ additem + ' está asociado a otro grupo, desea añadirlo a este?');
               }
               else{
-                if(this.grupo!=this.id){
-                  this.confirmDialog ('El '+this.message+' '+ additem + ' está asociado a otro grupo, desea añadirlo a este?');
-                  
-                }
-                else{
-                  this.confirmDialog('Desea agregar el '+this.message+' '+ additem + ' al grupo?');
-             
-              }}   
-     
-     });
-    this.itemname='';
+                this.confirmDialog('Desea agregar el '+this.message+' '+ additem + ' al grupo?');
+            }} 
+    });
+  this.itemname='';
   }
-
 }
