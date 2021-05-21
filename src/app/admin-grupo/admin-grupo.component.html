@@ -32,8 +32,8 @@
     <br>
     <br>
     <br>
-     <a (click)="creategroup(newname.value, newdescription.value, namegroup)"  class="btn btn-outline-danger btn-block; home" style="margin-left: 100px;margin-top: -15px; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 25px;"><b>{{settingsmsg}}</b></a>
-     <a href="/{{groupType}}" class="btn btn-outline-danger btn-block; home" ng-click="active='home'" style="margin-left: 100px;margin-top: -15px; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 25px;"><b>Cancelar</b></a>
+     <button (click)="creategroup(newname.value, newdescription.value, namegroup)"  class="btn btn-outline-danger btn-block; home" style="margin-left: 100px; margin-top: -15px; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 25px;" (disabled)="enablebtn">{{settingsmsg}}</button>
+     <a href="/{{groupType}}" class="btn btn-outline-danger btn-block; home" ng-click="active='home'" style="margin-left: 100px;margin-top: -15px; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 25px;" ><b>Volver a grupos</b></a>
 
     <br>  
   </div>

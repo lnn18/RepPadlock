@@ -10,8 +10,8 @@ import { data } from 'jquery';
 
 @Component({
   selector: 'app-admin-grupo',
-  templateUrl: './admin-grupo.component.html',
-  styleUrls: ['./admin-grupo.component.css']
+  templateUrl: './admin-grupo.component.html'
+  //styleUrls: ['./admin-grupo.component.css']
 })
 export class AdminGrupoComponent implements OnInit {
 
@@ -31,10 +31,7 @@ export class AdminGrupoComponent implements OnInit {
   itemsselect:any[]=[];
   items:any[]=[];
   id:string;
-  hidden_2:string;
-  
-  
-  
+  enablebtn:boolean;
   
   constructor(
     private route: ActivatedRoute,
@@ -43,12 +40,12 @@ export class AdminGrupoComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-  
-
     this.routeSub = this.route.params.subscribe(params => {   
       this.groupType=params['id'];
       this.settings=params['settings'];
     });
+    this.enablebtn=false;
+    this.msgenable=true;
     this.getGroupsLists();
     this.getGroupbyType();
   }
@@ -136,10 +133,11 @@ export class AdminGrupoComponent implements OnInit {
               this.data.IMEI=this.groupId.slice(5,);
               }  
             this.group.addcomponenttogroupimei(this.groupId,this.data.IMEI);});
+        this.groupname=" ";
+        this.groupdescription=" ";
         //this.group.addcomponenttogroupimei();
       }
-      this.groupname=" ";
-      this.groupdescription=" ";
+      
     }
   });
  //
@@ -179,7 +177,7 @@ export class AdminGrupoComponent implements OnInit {
         }
       }
     else{
-         this.messageDialog("Atención","Los campos no pueden quedar vacios",false);
+         this.messageDialog("Atención","Debe llenar todos los campos",false);
     }
   }
 
@@ -198,13 +196,17 @@ export class AdminGrupoComponent implements OnInit {
   creandogrupo(){
       this.delay(700).then(any=>{
         if(this.groupId=="Created"){
+          this.enablebtn=true;
           const dialogData = new MessageDialogModel("Creando grupo","Grupo creado.");
           this.messageDialog("Creando grupo","Grupo creado.",true);
+          this.enablebtn=false;
           this.msgenable=false;
         }
         else{
-          if(this.msgenable)
+          if(this.msgenable){
             this.messageDialog("Creando grupo","Grupo ya creado.",false);
+          
+          }
         }   
       });
   }
