@@ -133,21 +133,17 @@ export class AdminGrupoComponent implements OnInit {
               this.data.IMEI=this.groupId.slice(5,);
               }  
             this.group.addcomponenttogroupimei(this.groupId,this.data.IMEI);});
-        this.groupname=" ";
-        this.groupdescription=" ";
+        this.groupname=null;
+        this.groupdescription=null;
         //this.group.addcomponenttogroupimei();
-      }
-      
+      } 
     }
   });
- //
-
  }
 
   creategroup(newname:string,newdescription:string,namegroup){
     this.msgenable=true;
     if(newname && newdescription){
-       // console.log(newname+newdescription);
         if(namegroup==undefined &&this.type=='candados')  {this.messageDialog("Atención","Debe seleccionar un grupo de usuario",false);}
         else{
           this.data.nombre=newname;
@@ -194,9 +190,9 @@ export class AdminGrupoComponent implements OnInit {
   }    
 
   creandogrupo(){
+      this.enablebtn=true;
       this.delay(700).then(any=>{
-        if(this.groupId=="Created"){
-          this.enablebtn=true;
+        if(this.groupId=="Created"){   
           const dialogData = new MessageDialogModel("Creando grupo","Grupo creado.");
           this.messageDialog("Creando grupo","Grupo creado.",true);
           this.enablebtn=false;

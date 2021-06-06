@@ -11,13 +11,13 @@
 <div class="container">
   <div class= "wrap" style="align-items: center; margin-left: 200px; margin-right: 200px;">
   <br>
-  <label style="margin-left: 25px; color: dimgray;" >
+    <label style="margin-left: 25px; color: dimgray;" >
     <b style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 22px; margin-left: 20px;" > Nombre: </b>
-    <input type="text" #newname value="{{groupname}}"></label><br>
+    <input type="text" #newname [value]="groupname" autofocus></label><br>
   
     <label style="margin-left: 25px; color: dimgray;" >
     <b style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 22px; margin-left: 20px;" > Descripción: </b>
-    <input type="text" #newdescription value="{{groupdescription}}"></label><br>
+    <input type="text" #newdescription [value]="groupdescription" autofocus></label><br>
     
     
     <label style="margin-left: 25px; color: dimgray;" id="selectlabel" >
