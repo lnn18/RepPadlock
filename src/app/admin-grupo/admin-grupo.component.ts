@@ -200,7 +200,7 @@ export class AdminGrupoComponent implements OnInit {
         }
         else{
           if(this.msgenable){
-            this.messageDialog("Creando grupo","Grupo ya creado.",false);
+            this.messageDialog("Creando grupo","Error: ya existe un grupo con este nombre",false);
           
           }
         }   
