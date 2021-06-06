@@ -13,6 +13,7 @@ export class ConfirmDialogComponent {
   constructor(public dialogRef: MatDialogRef<ConfirmDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ConfirmDialogModel) {
     // Update view with given values
+    dialogRef.disableClose = true;
     this.title = data.title;
     this.message = data.message;
   }

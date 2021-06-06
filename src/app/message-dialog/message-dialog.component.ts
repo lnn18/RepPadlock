@@ -14,6 +14,7 @@ export class MessageDialogComponent  {
   constructor(public dialogRef: MatDialogRef<MessageDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: MessageDialogModel) {
     // Update view with given values
+    dialogRef.disableClose = true;
     this.title = data.title;
     this.message = data.message;
   }
@@ -22,7 +23,7 @@ export class MessageDialogComponent  {
     // Close the dialog, return true
     this.dialogRef.close(true);
   }
- 
+
   onDismiss(): void {
     // Close the dialog, return false
     this.dialogRef.close(false);
